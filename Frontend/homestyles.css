@@ -1,0 +1,83 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #090909;
+    color: white;
+  }
+  
+  .main-header {
+    width: 100%;
+    padding: 20px 50px;
+    background: #090909;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .header-content {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: white;
+  }
+  
+  .nav-container {
+    position: relative;
+    background: rgba(255, 255, 255, 0.1); /* Circular effect background */
+    border-radius: 50px;
+    padding: 10px 40px; /* Space around the links */
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .nav-item {
+    text-decoration: none;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+    padding: 10px 20px;
+    transition: color 0.3s ease;
+  }
+  
+  .nav-item:hover {
+    color: white;
+  }
+  
+  .nav-item.active {
+    color: white;
+  }
+  
+  .auth-links {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .auth-link {
+    color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 10px 20px;
+    border-radius: 50px;
+    transition: #090909 0.3s ease, color 0.3s ease;
+    text-decoration: none;
+  }
+  
+  .auth-link:hover {
+    color: white;
+  }
+  
