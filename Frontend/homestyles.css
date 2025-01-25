@@ -11,6 +11,9 @@ body {
 }
 
 .main-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
   width: 100%;
   padding: 20px 50px;
   background: #090909;
@@ -77,9 +80,8 @@ body {
 
 .nav-item:hover::after {
   width: 100%;
-  bottom: 8px; 
+  bottom: 8px; /* Adds gap between text and underline */
 }
-
 
 .auth-links {
   display: flex;
@@ -148,4 +150,18 @@ body {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
+}
+
+.section {
+  min-height: 100vh;
+  padding: 50px;
+  scroll-margin-top: 80px; /* Ensure sections are fully visible under sticky header */
+}
+
+/* home page */
+#home {
+  background-image: url("/assets/home.jpg");
+  background-size: cover;
+  background-position: center;
+    position: relative;
 }

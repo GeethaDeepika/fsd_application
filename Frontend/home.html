@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Replicated Header</title>
+  <title>Sticky Header Layout</title>
   <link rel="stylesheet" href="homestyles.css">
 </head>
 <body>
@@ -11,32 +11,51 @@
     <div class="header-content">
       <div class="logo">AI Detect</div>
       <div class="nav-container">
-        <nav class="nav-links">
-          <a href="#home" class="nav-item active">Home</a>
-          <a href="#about" class="nav-item">About us</a>
-          <div class="nav-item dropdown">
-            <a href="#glaucoma" class="dropdown-toggle">Glaucoma</a>
-            <div class="dropdown-menu">
-              <a href="#symptoms"> Symptoms</a>
-              <a href="#causes">Causes</a>
-              <a href="#risks"> Risks</a>
-              <a href="#prevention"> Prevention</a>
-            </div>
+      <nav class="nav-links">
+        <a href="#home" class="nav-item active">Home</a>
+        <a href="#about" class="nav-item">About Us</a>
+        <div class="nav-item dropdown">
+          <a href="#glaucoma" class="dropdown-toggle">Glaucoma</a>
+          <div class="dropdown-menu">
+            <a href="#symptoms">Symptoms</a>
+            <a href="#causes">Causes</a>
+            <a href="#risks">Risks</a>
+            <a href="#prevention">Prevention</a>
           </div>
-          <div class="nav-item dropdown">
-            <a href="#dr" class="dropdown-toggle">Diabetic Retinopathy</a>
-            <div class="dropdown-menu">
-              <a href="#symptoms-dr">DR Symptoms</a>
-              <a href="#treatment-dr">DR Treatment</a>
-            </div>
+        </div>
+        <div class="nav-item dropdown">
+          <a href="#dr" class="dropdown-toggle">Diabetic Retinopathy</a>
+          <div class="dropdown-menu">
+            <a href="#symptoms-dr">DR Symptoms</a>
+            <a href="#treatment-dr">DR Treatment</a>
           </div>
-        </nav>
-      </div>
+        </div>
+      </nav>
+    </div>
       <div class="auth-links">
         <a href="signup.html" class="auth-link">Sign up</a>
         <a href="login.html" class="auth-link">Login</a>
       </div>
     </div>
   </header>
+
+  <main>
+    <section id="home" class="section">
+      <h1>Welcome to AI Detect</h1>
+      <!-- <img src="/assets/home.jpg" alt="Home image"> -->
+    </section>
+    <section id="about" class="section">
+      <h1>About Us</h1>
+      <p>About Us content goes here...</p>
+    </section>
+    <section id="glaucoma" class="section">
+      <h1>Glaucoma</h1>
+      <p>Glaucoma content goes here...</p>
+    </section>
+    <section id="dr" class="section">
+      <h1>Diabetic Retinopathy</h1>
+      <p>Diabetic Retinopathy content goes here...</p>
+    </section>
+  </main>
 </body>
 </html>
