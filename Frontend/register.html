@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Register</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="style.css">
 </head>
@@ -14,12 +14,12 @@
     <div class="form_wrapper">
         <div class="form_container">
           <div class="title_container">
-            <h2>Login From</h2>
+            <h2>Regiser From</h2>
           </div>
 
           <div class="row clearfix">
             <div>
-                <form id="loginForm">
+                <form id="signupForm">
 
                     <div class="input_field">
                         <span><i class="fa fa-envelope" aria-hidden="true"></i>
@@ -33,14 +33,33 @@
                         <input type="password" name="password" placeholder="Password" required>
                     </div>
 
+                    <div class="input_field">
+                        <span><i class="fa fa-lock" aria-hidden="true"></i>
+                        </span>
+                        <input type="password" name="retype_password" placeholder="Re-type Password" required>
+                    </div>
 
+                    <div class="row clearfix">
+                        <div class="col_half">
+                            <div class="input_field">
+                                <span><i class="fa fa-user" aria-hidden="true"></i>
+                                </span>
+                                <input type="text" name="firstName" placeholder="First Name" required>
+                            </div>
+                        </div>
+                        <div class="col_half">
+                            <div class="input_field">
+                                <span><i class="fa fa-user" aria-hidden="true"></i>
+                                </span>
+                                <input type="text" name="lastName" placeholder="Last Name" required>
+                            </div>
+                        </div>
+                    </div>
 
-                    <input class="button" type="submit" value="Login">
+                    <input class="button" type="submit" value="Register">
 
                     <div class="extraLinks">
-                        <a class="customLink" href="/Frontend/register.html">Create a new account</a>
-                        <a class="customLink" href="/Frontend/forgot.html">Forgot Password</a>
-
+                        <a class="customLink" href="/Frontend/login.html">Have an Account Login</a>
                     </div>
 
                 </form>
@@ -52,4 +71,4 @@
 
 <script src="script.js"></script>
 </body>
-</html
+</html>
