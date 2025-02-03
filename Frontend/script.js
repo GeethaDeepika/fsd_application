@@ -76,4 +76,115 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
         });
     }
+
+    // Handle Forgot Password Form
+    const forgotPasswordForm = document.querySelector("#forgotPasswordForm");
+
+    if (forgotPasswordForm) {
+        forgotPasswordForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const email = forgotPasswordForm.elements["email"].value;
+
+            fetch("http://localhost:5001/api/auth/forgot-password", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email }),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    document.getElementById("message").textContent = data.message;
+                    if (data.success) {
+                        setTimeout(() => {
+                            window.location.href = "verify-reset-code.html"; // Redirect to reset code verification page
+                        }, 2000);
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                    document.getElementById("message").textContent = "Error sending reset code.";
+                });
+        });
+    }
+
+    // Handle Verify Reset Code Form (User enters the reset code)
+    const verifyResetCodeForm = document.querySelector("#verify-reset-code-form");
+
+    if (verifyResetCodeForm) {
+        verifyResetCodeForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const email = document.querySelector("#email").value;
+            const code = document.querySelector("#code").value;
+
+            fetch("http://localhost:5001/api/auth/verify-reset-code", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email, code }),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.success) {
+                        alert("Code verified successfully! Redirecting to reset password...");
+                        sessionStorage.setItem("email", email);
+                        sessionStorage.setItem("resetCode", code);
+                        window.location.href = "reset-password.html"; // Redirect on success
+                    } else {
+                        alert(data.message || "Invalid code.");
+                    }
+                })
+                .catch((error) => {
+                    console.error("Verification error:", error);
+                    alert("Server error. Please try again later.");
+                });
+        });
+    }
+
+
+    const resetPasswordForm = document.querySelector("#resetPasswordForm");
+    if (resetPasswordForm) {
+        const email = sessionStorage.getItem("email");
+        const resetCode = sessionStorage.getItem("resetCode");
+
+        if (!email || !resetCode) {
+            alert("Invalid session. Please restart the password reset process.");
+            window.location.href = "forgot-password.html"; // Redirect back
+            return;
+        }
+
+        resetPasswordForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const newPassword = document.querySelector("#newPassword").value;
+            const confirmPassword = document.querySelector("#confirmPassword").value;
+
+            if (newPassword !== confirmPassword) {
+                alert("Passwords do not match!");
+                return;
+            }
+
+            // Send request to backend
+            fetch("http://localhost:5001/api/auth/reset-password", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email, resetCode, newPassword }),
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                alert(data.message);
+                if (data.message === "Password reset successfully!") {
+                    sessionStorage.removeItem("email");
+                    sessionStorage.removeItem("resetCode");
+                    window.location.href = "login.html"; // Redirect to login
+                }
+            })
+            .catch((error) => console.error("Reset error:", error));
+        });
+    }
 });

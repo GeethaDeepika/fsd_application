@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Password</title>
+    <link rel="stylesheet" href="style.css"> <!-- Your CSS file -->
+</head>
+<body>
+    <div class="container">
+        <h2>Reset Code Verification</h2>
+        <!-- Verify Reset Code Page -->
+        <form id="verify-reset-code-form">
+            <label for="email">Enter your email address:</label>
+            <input type="email" id="email" placeholder="Enter your email" required>
+            <label for="code">Enter the reset code:</label>
+            <input type="text" id="code" placeholder="Enter the code" required>
+            <button type="submit">Verify Code</button>
+        </form>
+        <div id="verify-reset-code-message"></div>
+
+    </div>
+
+    <script src="script.js"></script> <!-- JavaScript file -->
+</body>
+</html>
