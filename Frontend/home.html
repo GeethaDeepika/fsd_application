@@ -41,8 +41,17 @@
 
   <main>
     <section id="home" class="section">
-      <h1>Welcome to AI Detect</h1>
-      <!-- <img src="/assets/home.jpg" alt="Home image"> -->
+      <div class="Text-Content">
+         <h1 id="welcome">Welcome to AI Detect</h1>
+         <div id="captionsss">
+          <h2>Early Detection Saves Sight</h2>
+          <h1>Empowering Vision Through AI</h1>
+         </div>
+         <div class="button-container">
+          <button id="Know more" onclick="scrollToAbout()">Know more</button>
+          <button id="explore" onclick="goToSignup()">Explore</button>
+         </div>
+      </div>
     </section>
     <section id="about" class="section">
       <h1>About Us</h1>
@@ -57,5 +66,14 @@
       <p>Diabetic Retinopathy content goes here...</p>
     </section>
   </main>
+  <script>
+    function scrollToAbout() {
+    document.getElementById("about").scrollIntoView({ behavior: "smooth" });
+    }
+
+    function goToSignup() {
+        window.location.href = "/Frontend/register.html"; // Change this to your signup page URL
+    } 
+  </script>
 </body>
 </html>

@@ -86,6 +86,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const email = forgotPasswordForm.elements["email"].value;
 
+            localStorage.setItem("resetEmail", email);
+
             fetch("http://localhost:5001/api/auth/forgot-password", {
                 method: "POST",
                 headers: {
@@ -113,10 +115,20 @@ document.addEventListener("DOMContentLoaded", function () {
     const verifyResetCodeForm = document.querySelector("#verify-reset-code-form");
 
     if (verifyResetCodeForm) {
+
+        const storedEmail = localStorage.getItem("resetEmail");
+        if (storedEmail) {
+            document.querySelector("#email").value = storedEmail;
+        } else {
+            alert("Invalid session. Please restart the password reset process.");
+            window.location.href = "forgot.html"; // Redirect back
+        }
+
         verifyResetCodeForm.addEventListener("submit", function (event) {
             event.preventDefault();
 
-            const email = document.querySelector("#email").value;
+            // const email = document.querySelector("#email").value;
+            const email = localStorage.getItem("resetEmail");
             const code = document.querySelector("#code").value;
 
             fetch("http://localhost:5001/api/auth/verify-reset-code", {
@@ -130,8 +142,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 .then((data) => {
                     if (data.success) {
                         alert("Code verified successfully! Redirecting to reset password...");
-                        sessionStorage.setItem("email", email);
-                        sessionStorage.setItem("resetCode", code);
+                        // sessionStorage.setItem("email", email);
+                        // sessionStorage.setItem("resetCode", code);
+                        localStorage.setItem("resetCode", code);
                         window.location.href = "reset-password.html"; // Redirect on success
                     } else {
                         alert(data.message || "Invalid code.");
@@ -147,13 +160,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const resetPasswordForm = document.querySelector("#resetPasswordForm");
     if (resetPasswordForm) {
-        const email = sessionStorage.getItem("email");
-        const resetCode = sessionStorage.getItem("resetCode");
+        // const email = sessionStorage.getItem("email");
+        // const resetCode = sessionStorage.getItem("resetCode");
 
-        if (!email || !resetCode) {
+        const storedEmail = localStorage.getItem("resetEmail");
+        const storedResetCode = localStorage.getItem("resetCode");
+
+        // if (!email || !resetCode) {
+        //     alert("Invalid session. Please restart the password reset process.");
+        //     window.location.href = "forgot.html"; // Redirect back
+        //     return;
+        // }
+
+        if (storedEmail && storedResetCode) {
+            document.querySelector("#email").value = storedEmail;
+        } else {
             alert("Invalid session. Please restart the password reset process.");
-            window.location.href = "forgot-password.html"; // Redirect back
-            return;
+            window.location.href = "forgot.html"; // Redirect back
         }
 
         resetPasswordForm.addEventListener("submit", function (event) {
@@ -173,14 +196,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ email, resetCode, newPassword }),
+                body: JSON.stringify({ email: storedEmail, resetCode: storedResetCode, newPassword }),
             })
             .then((response) => response.json())
             .then((data) => {
                 alert(data.message);
                 if (data.message === "Password reset successfully!") {
-                    sessionStorage.removeItem("email");
-                    sessionStorage.removeItem("resetCode");
+                    // sessionStorage.removeItem("email");
+                    // sessionStorage.removeItem("resetCode");
+                        localStorage.removeItem("resetEmail");
+                        localStorage.removeItem("resetCode");
                     window.location.href = "login.html"; // Redirect to login
                 }
             })
