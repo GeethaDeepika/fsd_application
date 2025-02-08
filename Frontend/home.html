@@ -86,352 +86,14 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #4834d4;
-            --secondary-color: #686de0;
-            --accent-color: #be2edd;
-            --text-light: #fff;
-        }
-
-        /* Animated Background */
-        .disease-section {
-        padding: 8rem 0;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .disease-info-card {
-        padding: 2rem;
-        background: white;
-        border-radius: 20px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease;
-    }
-
-    .disease-info-card:hover {
-        transform: translateY(-5px);
-    }
-
-    .info-block {
-        padding: 1.5rem;
-        background: rgba(72, 52, 212, 0.05);
-        border-radius: 15px;
-        margin-bottom: 1rem;
-    }
-
-    .info-block h4 {
-        color: var(--primary-color);
-        margin-bottom: 1rem;
-    }
-
-    .stage-blocks {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-    }
-
-    .stage-block {
-        background: rgba(72, 52, 212, 0.05);
-        padding: 1rem;
-        border-radius: 10px;
-        position: relative;
-    }
-
-    .stage-number {
-        position: absolute;
-        top: -10px;
-        left: -10px;
-        width: 30px;
-        height: 30px;
-        background: var(--primary-color);
-        color: white;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-    }
-
-    .image-container {
-        position: relative;
-        overflow: hidden;
-        border-radius: 20px;
-    }
-
-    .image-overlay {
-        position: absolute;
-        bottom: 20px;
-        left: 20px;
-        right: 20px;
-        background: rgba(255, 255, 255, 0.9);
-        padding: 1.5rem;
-        border-radius: 15px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    }
-
-    .stat-box h4 {
-        color: var(--primary-color);
-        margin-bottom: 0.5rem;
-    }
-
-    .stat-box p {
-        margin-bottom: 0;
-        font-size: 0.9rem;
-    }
-
-    @media (max-width: 768px) {
-        .disease-section {
-            padding: 4rem 0;
-        }
-        
-        .image-container {
-            margin-top: 2rem;
-        }
-    }
-        .animated-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, #4834d4, #686de0, #be2edd);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            z-index: -1;
-        }
-
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .navbar {
-            background-color: rgba(44, 62, 80, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 1rem 0;
-            transition: all 0.3s ease;
-        }
-
-        .navbar-brand {
-            color: var(--text-light);
-            font-size: 1.8rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .nav-link {
-            color: var(--text-light) !important;
-            font-weight: 500;
-            position: relative;
-            padding: 0.5rem 1rem;
-            margin: 0 0.2rem;
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: 0;
-            left: 50%;
-            background-color: var(--accent-color);
-            transition: all 0.3s ease;
-            transform: translateX(-50%);
-        }
-
-        .nav-link:hover::after {
-            width: 100%;
-        }
-
-        .hero-section {
-            min-height: 100vh;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 6rem 0;
-        }
-
-        .hero-content {
-            z-index: 1;
-            color: var(--text-light);
-        }
-
-        .hero-title {
-            font-size: 4.5rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            animation: fadeInDown 1s ease-out;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .hero-subtitle {
-            font-size: 2.2rem;
-            margin-bottom: 2rem;
-            animation: fadeInUp 1s ease-out 0.5s;
-            animation-fill-mode: both;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-        }
-
-        .floating {
-            animation: floating 3s ease-in-out infinite;
-        }
-
-        @keyframes floating {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0px); }
-        }
-
-        .btn-custom {
-            padding: 1rem 2.5rem;
-            margin: 0.5rem;
-            border-radius: 50px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-        }
-
-        .btn-custom::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 0;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-            z-index: -1;
-        }
-
-        .btn-custom:hover::before {
-            width: 100%;
-        }
-
-        .btn-primary {
-            background-color: var(--accent-color);
-            border: none;
-        }
-
-        .btn-outline-light:hover {
-            background-color: var(--secondary-color);
-            border-color: var(--secondary-color);
-        }
-
-        .about-section {
-            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
-            padding: 8rem 0;
-            position: relative;
-        }
-
-        .feature-card {
-            padding: 2.5rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            margin-bottom: 2rem;
-            background: white;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-        }
-
-        .feature-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .feature-icon {
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .feature-card:hover .feature-icon {
-            transform: scale(1.2);
-            color: var(--accent-color);
-        }
-
-        /* Scroll Animation */
-        .scroll-indicator {
-            position: absolute;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-30px); }
-            60% { transform: translateY(-15px); }
-        }
-
-        /* Background Particles */
-        .particles {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: 0;
-        }
-
-        .particle {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            animation: float 20s infinite;
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0) rotate(0deg); }
-            100% { transform: translateY(-100vh) rotate(360deg); }
-        }
-
-        /* Add more particles in HTML */
-        @media (max-width: 768px) {
-            .hero-title {
-                font-size: 3rem;
-            }
-            .hero-subtitle {
-                font-size: 1.8rem;
-            }
-        }
-    </style>
+    <link href="homestyles.css" rel="stylesheet">
 </head>
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
             <a class="navbar-brand animate__animated animate__fadeIn" href="#home">
-              <!-- <a class="navbar-brand animate__animated animate__fadeIn" href="#home"> -->
                 <i class="fas fa-eye me-2"></i>AI Detect
-            </a>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -445,25 +107,11 @@
                         <a class="nav-link animate__animated animate__fadeIn" href="#about">About Us</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link  animate__animated animate__fadeIn" href="#glaucoma" >
-                            Glaucoma
-                        </a>
-                        <!-- <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#symptoms">Symptoms</a></li>
-                            <li><a class="dropdown-item" href="#causes">Causes</a></li>
-                            <li><a class="dropdown-item" href="#risks">Risks</a></li>
-                            <li><a class="dropdown-item" href="#prevention">Prevention</a></li>
-                        </ul> -->
+                        <a class="nav-link animate__animated animate__fadeIn" href="#glaucoma">Glaucoma</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link  animate__animated animate__fadeIn" href="#dr" >
-                            Diabetic Retinopathy
-                        </a></li>
-                        <!-- <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#symptoms-dr">DR Symptoms</a></li>
-                            <li><a class="dropdown-item" href="#treatment-dr">DR Treatment</a></li>
-                        </ul> -->
-                    
+                        <a class="nav-link animate__animated animate__fadeIn" href="#dr">Diabetic Retinopathy</a>
+                    </li>
                 </ul>
                 <div class="d-flex">
                     <a href="register.html" class="btn btn-outline-light me-2 animate__animated animate__fadeIn">Sign up</a>
@@ -476,9 +124,7 @@
     <!-- Hero Section -->
     <section id="home" class="hero-section">
         <div class="animated-bg"></div>
-        <div class="particles">
-            <!-- Add particles dynamically with JavaScript -->
-        </div>
+        <div class="particles"></div>
         <div class="container">
             <div class="hero-content">
                 <h1 class="hero-title animate__animated animate__fadeInDown">Welcome to AI Detect</h1>
@@ -528,175 +174,208 @@
             </div>
         </div>
     </section>
+
+    <!-- Glaucoma Section -->
     <section id="glaucoma" class="disease-section">
-      <div class="container">
-          <h2 class="text-center mb-5 animate__animated animate__fadeIn">Understanding Glaucoma</h2>
-          <div class="row align-items-center">
-              <div class="col-lg-6 animate__animated animate__fadeInLeft">
-                  <div class="disease-info-card">
-                      <h3 class="mb-4">What is Glaucoma?</h3>
-                      <p class="lead">Glaucoma is a group of eye conditions that damage the optic nerve, essential for good vision.</p>
-                      
-                      <div class="info-blocks mt-4">
-                          <div class="info-block mb-4">
-                              <h4><i class="fas fa-exclamation-triangle text-warning me-2"></i>Common Symptoms</h4>
-                              <ul class="list-unstyled">
-                                  <li><i class="fas fa-check text-success me-2"></i>Gradual loss of peripheral vision</li>
-                                  <li><i class="fas fa-check text-success me-2"></i>Eye pain and headaches</li>
-                                  <li><i class="fas fa-check text-success me-2"></i>Blurred vision</li>
-                                  <li><i class="fas fa-check text-success me-2"></i>Rainbow-colored halos around lights</li>
-                              </ul>
-                          </div>
-                          
-                          <div class="info-block mb-4">
-                              <h4><i class="fas fa-search me-2"></i>Risk Factors</h4>
-                              <ul class="list-unstyled">
-                                  <li><i class="fas fa-circle text-primary me-2"></i>Age over 60</li>
-                                  <li><i class="fas fa-circle text-primary me-2"></i>Family history</li>
-                                  <li><i class="fas fa-circle text-primary me-2"></i>High eye pressure</li>
-                                  <li><i class="fas fa-circle text-primary me-2"></i>Certain medical conditions</li>
-                              </ul>
-                          </div>
-                      </div>
+        <div class="container">
+            <h2 class="text-center mb-5 animate__animated animate__fadeIn">Understanding Glaucoma</h2>
+            <div class="row align-items-center">
+                <div class="col-lg-6 animate__animated animate__fadeInLeft">
+                    <div class="disease-info-card">
+                        <h3 class="mb-4">What is Glaucoma?</h3>
+                        <p class="lead">Glaucoma is a group of eye conditions that damage the optic nerve, essential for good vision.</p>
+                        
+                        <div class="info-blocks mt-4">
+                            <div class="info-block mb-4">
+                                <h4><i class="fas fa-exclamation-triangle text-warning me-2"></i>Common Symptoms</h4>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-check text-success me-2"></i>Gradual loss of peripheral vision</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Eye pain and headaches</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Blurred vision</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Rainbow-colored halos around lights</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="info-block mb-4">
+                                <h4><i class="fas fa-search me-2"></i>Risk Factors</h4>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-circle text-primary me-2"></i>Age over 60</li>
+                                    <li><i class="fas fa-circle text-primary me-2"></i>Family history</li>
+                                    <li><i class="fas fa-circle text-primary me-2"></i>High eye pressure</li>
+                                    <li><i class="fas fa-circle text-primary me-2"></i>Certain medical conditions</li>
+                                </ul>
+                            </div>
+                        </div>
 
-                      <div class="text-center mt-4">
-                          <a href="#symptoms" class="btn btn-primary btn-custom me-3">Learn More</a>
-                          <a href="#prevention" class="btn btn-outline-primary btn-custom">Prevention Tips</a>
-                      </div>
-                  </div>
-              </div>
-              <div class="col-lg-6 animate__animated animate__fadeInRight">
-                  <div class="image-container position-relative">
-                      <img src="/api/placeholder/600/400" alt="Glaucoma Illustration" class="img-fluid rounded-lg shadow-lg">
-                      <div class="image-overlay">
-                          <div class="stat-box">
-                              <h4>Did You Know?</h4>
-                              <p>Over 3 million Americans have glaucoma, but only half know they have it.</p>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </section>
+                        <div class="text-center mt-4">
+                            <a href="#symptoms" class="btn btn-primary btn-custom me-3">Learn More</a>
+                            <a href="#prevention" class="btn btn-outline-primary btn-custom">Prevention Tips</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 animate__animated animate__fadeInRight">
+                    <div class="image-container position-relative">
+                        <img src="/api/placeholder/600/400" alt="Glaucoma Illustration" class="img-fluid rounded-lg shadow-lg">
+                        <div class="image-overlay">
+                            <div class="stat-box">
+                                <h4>Did You Know?</h4>
+                                <p>Over 3 million Americans have glaucoma, but only half know they have it.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <!-- Diabetic Retinopathy Section -->
-  <section id="dr" class="disease-section bg-light">
-      <div class="container">
-          <h2 class="text-center mb-5 animate__animated animate__fadeIn">Diabetic Retinopathy</h2>
-          <div class="row align-items-center">
-              <div class="col-lg-6 order-lg-2 animate__animated animate__fadeInRight">
-                  <div class="disease-info-card">
-                      <h3 class="mb-4">Understanding Diabetic Retinopathy</h3>
-                      <p class="lead">A diabetes complication affecting blood vessels in the retina, potentially leading to vision loss.</p>
+    <!-- Diabetic Retinopathy Section -->
+    <section id="dr" class="disease-section bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5 animate__animated animate__fadeIn">Diabetic Retinopathy</h2>
+            <div class="row align-items-center">
+                <div class="col-lg-6 order-lg-2 animate__animated animate__fadeInRight">
+                    <div class="disease-info-card">
+                        <h3 class="mb-4">Understanding Diabetic Retinopathy</h3>
+                        <p class="lead">A diabetes complication affecting blood vessels in the retina, potentially leading to vision loss.</p>
 
-                      <div class="stages-container mt-4">
-                          <h4 class="mb-3"><i class="fas fa-chart-line me-2"></i>Stages of DR</h4>
-                          <div class="stage-blocks">
-                              <div class="stage-block">
-                                  <span class="stage-number">1</span>
-                                  <h5>Mild NPDR</h5>
-                                  <p>Small areas of balloon-like swelling in retina's blood vessels</p>
-                              </div>
-                              <div class="stage-block">
-                                  <span class="stage-number">2</span>
-                                  <h5>Moderate NPDR</h5>
-                                  <p>Some blood vessels that nourish the retina become blocked</p>
-                              </div>
-                              <div class="stage-block">
-                                  <span class="stage-number">3</span>
-                                  <h5>Severe NPDR</h5>
-                                  <p>More blood vessels become blocked, leading to areas of the retina being deprived of blood supply</p>
-                              </div>
-                          </div>
-                      </div>
+                        <div class="stages-container mt-4">
+                            <h4 class="mb-3"><i class="fas fa-chart-line me-2"></i>Stages of DR</h4>
+                            <div class="stage-blocks">
+                                <div class="stage-block">
+                                    <span class="stage-number">1</span>
+                                    <h5>Mild NPDR</h5>
+                                    <p>Small areas of balloon-like swelling in retina's blood vessels</p>
+                                </div>
+                                <div class="stage-block">
+                                    <span class="stage-number">2</span>
+                                    <h5>Moderate NPDR</h5>
+                                    <p>Some blood vessels that nourish the retina become blocked</p>
+                                </div>
+                                <div class="stage-block">
+                                    <span class="stage-number">3</span>
+                                    <h5>Severe NPDR</h5>
+                                    <p>More blood vessels become blocked, leading to areas of the retina being deprived of blood supply</p>
+                                </div>
+                            </div>
+                        </div>
 
-                      <div class="treatment-options mt-4">
-                          <h4><i class="fas fa-hospital-user me-2"></i>Treatment Options</h4>
-                          <div class="row">
-                              <div class="col-md-6">
-                                  <ul class="list-unstyled">
-                                      <li><i class="fas fa-check-circle text-success me-2"></i>Laser Treatment</li>
-                                      <li><i class="fas fa-check-circle text-success me-2"></i>Anti-VEGF Therapy</li>
-                                  </ul>
-                              </div>
-                              <div class="col-md-6">
-                                  <ul class="list-unstyled">
-                                      <li><i class="fas fa-check-circle text-success me-2"></i>Vitrectomy</li>
-                                      <li><i class="fas fa-check-circle text-success me-2"></i>Regular Monitoring</li>
-                                  </ul>
-                              </div>
-                          </div>
-                      </div>
+                        <div class="treatment-options mt-4">
+                            <h4><i class="fas fa-hospital-user me-2"></i>Treatment Options</h4>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ul class="list-unstyled">
+                                        <li><i class="fas fa-check-circle text-success me-2"></i>Laser Treatment</li>
+                                        <li><i class="fas fa-check-circle text-success me-2"></i>Anti-VEGF Therapy</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="list-unstyled">
+                                        <li><i class="fas fa-check-circle text-success me-2"></i>Vitrectomy</li>
+                                        <li><i class="fas fa-check-circle text-success me-2"></i>Regular Monitoring</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
 
-                      <div class="text-center mt-4">
-                          <a href="#symptoms-dr" class="btn btn-primary btn-custom me-3">Symptoms</a>
-                          <a href="#treatment-dr" class="btn btn-outline-primary btn-custom">Treatment Options</a>
-                      </div>
-                  </div>
-              </div>
-              <div class="col-lg-6 order-lg-1 animate__animated animate__fadeInLeft">
-                  <div class="image-container position-relative">
-                      <img src="/api/placeholder/600/400" alt="Diabetic Retinopathy Illustration" class="img-fluid rounded-lg shadow-lg">
-                      <div class="image-overlay">
-                          <div class="stat-box">
-                              <h4>Warning Signs</h4>
-                              <p>Early detection and treatment can reduce the risk of blindness by 95%</p>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </section>
+                        <div class="text-center mt-4">
+                            <a href="#symptoms-dr" class="btn btn-primary btn-custom me-3">Symptoms</a>
+                            <a href="#treatment-dr" class="btn btn-outline-primary btn-custom">Treatment Options</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 order-lg-1 animate__animated animate__fadeInLeft">
+                    <div class="image-container position-relative">
+                        <img src="/api/placeholder/600/400" alt="Diabetic Retinopathy Illustration" class="img-fluid rounded-lg shadow-lg">
+                        <div class="image-overlay">
+                            <div class="stat-box">
+                                <h4>Warning Signs</h4>
+                                <p>Early detection and treatment can reduce the risk of blindness by 95%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
+
+    <section id="developers" class="developers-section bg-light py-5">
+        <div class="container">
+            <h2 class="text-center mb-5 animate__animated animate__fadeIn">Our Development Team</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-3 col-sm-6 mb-4">
+                    <div class="card developer-card text-center">
+                        <img src="/api/placeholder/250/250" class="card-img-top rounded-circle mx-auto mt-4" alt="Developer 1">
+                        <div class="card-body">
+                            <h5 class="card-title">Krishna Varun</h5>
+                            <p class="card-text">Full Stack and Gen AI Engineer</p>
+                            <div class="social-links">
+                                <a href="https://www.linkedin.com/in/johndoe" target="_blank" class="btn btn-primary btn-sm me-2">
+                                    <i class="fab fa-linkedin"></i>
+                                </a>
+                                <a href="mailto:avskvarun75@gmail.com" class="btn btn-secondary btn-sm">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-4">
+                    <div class="card developer-card text-center">
+                        <img src="/api/placeholder/250/250" class="card-img-top rounded-circle mx-auto mt-4" alt="Developer 2">
+                        <div class="card-body">
+                            <h5 class="card-title">Geetha Deepika</h5>
+                            <p class="card-text">Full Stack and ML Engineer</p>
+                            <div class="social-links">
+                                <a href="https://www.linkedin.com/in/janesmith" target="_blank" class="btn btn-primary btn-sm me-2">
+                                    <i class="fab fa-linkedin"></i>
+                                </a>
+                                <a href="mailto:jane.smith@aidetect.com" class="btn btn-secondary btn-sm">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-4">
+                    <div class="card developer-card text-center">
+                        <img src="/api/placeholder/250/250" class="card-img-top rounded-circle mx-auto mt-4" alt="Developer 3">
+                        <div class="card-body">
+                            <h5 class="card-title">Himamsh</h5>
+                            <p class="card-text">ML Engineer</p>
+                            <div class="social-links">
+                                <a href="https://www.linkedin.com/in/mikejohnson" target="_blank" class="btn btn-primary btn-sm me-2">
+                                    <i class="fab fa-linkedin"></i>
+                                </a>
+                                <a href="mailto:mike.johnson@aidetect.com" class="btn btn-secondary btn-sm">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-4">
+                    <div class="card developer-card text-center">
+                        <img src="/api/placeholder/250/250" class="card-img-top rounded-circle mx-auto mt-4" alt="Developer 4">
+                        <div class="card-body">
+                            <h5 class="card-title">Dinakar</h5>
+                            <p class="card-text">ML Engineer</p>
+                            <div class="social-links">
+                                <a href="https://www.linkedin.com/in/sarahwilliams" target="_blank" class="btn btn-primary btn-sm me-2">
+                                    <i class="fab fa-linkedin"></i>
+                                </a>
+                                <a href="mailto:sarah.williams@aidetect.com" class="btn btn-secondary btn-sm">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Create particles
-        function createParticles() {
-            const particlesContainer = document.querySelector('.particles');
-            for (let i = 0; i < 50; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.width = Math.random() * 20 + 'px';
-                particle.style.height = particle.style.width;
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.top = Math.random() * 100 + '%';
-                particle.style.animationDuration = (Math.random() * 20 + 10) + 's';
-                particle.style.animationDelay = Math.random() * 5 + 's';
-                particlesContainer.appendChild(particle);
-            }
-        }
-
-        // Smooth scroll function
-        function scrollToAbout() {
-            document.getElementById("about").scrollIntoView({ behavior: "smooth" });
-        }
-
-        function goToSignup() {
-            window.location.href = "register.html";
-        }
-
-        // Initialize particles on load
-        window.addEventListener('load', createParticles);
-
-        // Animate elements on scroll
-        const observerOptions = {
-            threshold: 0.1
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate__animated', 'animate__fadeInUp');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.feature-card').forEach(card => {
-            observer.observe(card);
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
