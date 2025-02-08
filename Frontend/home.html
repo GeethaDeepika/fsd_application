@@ -376,6 +376,14 @@
     </section>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
-    <script src="script.js"></script>
+    <script>
+        function scrollToAbout() {
+        document.getElementById("about").scrollIntoView({ behavior: "smooth" });
+        }
+    
+        function goToSignup() {
+            window.location.href = "/Frontend/register.html"; // Change this to your signup page URL
+        } 
+      </script>
 </body>
 </html>

@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", function () {
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    document.getElementById("message").textContent = data.message;
+                    document.getElementById("messageBox").textContent = data.message;
                     if (data.success) {
                         setTimeout(() => {
                             window.location.href = "verify-reset-code.html"; // Redirect to reset code verification page
