@@ -1,19 +1,19 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
 body {
   font-family: "Poppins", sans-serif;
   font-size: 14px;
   background: #f2f2f2;
-}
+} */
 
-.clearfix:after {
+/* .clearfix:after {
   content: "";
   display: block;
   clear: both;
   visibility: hidden;
   height: 0;
-}
+} */
 
-.form_wrapper {
+/* .form_wrapper {
   background: #fff;
   width: 400px;
   max-width: 100%;
@@ -24,7 +24,8 @@ body {
   z-index: 1;
   border-top: 5px solid #06c59c;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
-  transform-origin: 50% 0%;
+  trans
+  orm-origin: 50% 0%;
   transform: scale3d(1, 1, 1);
   transition: none;
   -webkit-animation: expand 0.8s 0.6s ease-out forwards;
@@ -131,13 +132,13 @@ body {
 
 .form_container .row .col_half.last {
   border-left: 1px solid #cccccc;
-}
+} */
 
-.extraLinks {
+/* .extraLinks {
   display: flex;
   justify-content: space-between;
-}
-
+} */
+/* 
 .customLink {
   text-decoration: none;
   font-size: small;
@@ -147,8 +148,8 @@ body {
 
 .customLink:hover {
   color: #7b7b7b;
-}
-
+} */
+/* 
 @-webkit-keyframes check {
   0% {
     height: 0;
@@ -200,7 +201,7 @@ body {
     transform: translate3d(0, 0, 0);
     opacity: 1;
   }
-}
+} */
 @media (max-width: 600px) {
   .form_wrapper .col_half {
     width: 100%;
@@ -215,7 +216,7 @@ body {
   }
 
 
-  * {
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
