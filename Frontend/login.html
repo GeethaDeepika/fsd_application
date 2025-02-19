@@ -240,6 +240,7 @@
                 if (data.token) {
                     // Store the JWT token in localStorage
                     localStorage.setItem("token", data.token);
+                    localStorage.setItem("user", JSON.stringify(data.user));
                     
                     // Show success alert
                     successAlert.classList.add('show');
