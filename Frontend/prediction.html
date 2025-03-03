@@ -64,9 +64,13 @@
                 <i class="fas fa-eye card-icon"></i>
                 <h3>Glaucoma Detection</h3>
                 <p>Upload retinal images for glaucoma detection using our advanced AI model.</p>
-                <button class="upload-btn">
+                <input type="file" id="glaucomaImageInput" accept="image/*" hidden>
+                <button class="upload-btn" onclick="document.getElementById('glaucomaImageInput').click();">
                     <i class="fas fa-upload"></i> Upload Image
                 </button>
+                <div id="glaucomaPreviewContainer" class="preview-container"></div>
+                <button class="submit-btn" id="predictBtn" onclick="submitPrediction()">Submit for Prediction</button>
+                <p id="predictionResult"></p>
             </div>
 
             <div class="detection-card">
