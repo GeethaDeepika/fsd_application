@@ -1,49 +1,40 @@
 import os
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, send_file
 import torch
 from torchvision import transforms
 from PIL import Image
 from flask_cors import CORS
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+import io
+import torch.nn.functional as F 
 
-# Initialize Flask app; set static and template folders to your Frontend directory.
+# Initialize Flask app
 app = Flask(__name__, static_folder='Frontend', template_folder='Frontend')
 CORS(app)
 app.config['UPLOAD_FOLDER'] = 'uploads'
+os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)  
 
-# Create the uploads folder if it doesn't exist
-if not os.path.exists(app.config['UPLOAD_FOLDER']):
-    os.makedirs(app.config['UPLOAD_FOLDER'])
+MODEL_PATH = "final_vit_glaucoma_model_the_bestepochs.pth"
+model = None
 
-# Load the entire model directly (requires that you saved the full model)
 try:
-    model = torch.load("best_model.pth", map_location=torch.device("cpu"))
-    model.eval()
-    print("Model loaded successfully without redefining the architecture.")
+    if os.path.exists(MODEL_PATH):
+        model = torch.load(MODEL_PATH, map_location=torch.device("cpu"))
+        model.eval()
+        print("✅ Model loaded successfully.")
+    else:
+        print(f"❌ Error: Model file '{MODEL_PATH}' not found.")
 except Exception as e:
-    print("Error loading model:", e)
-    model = None
+    print(f"❌ Error loading model: {e}")
 
-# Function to preprocess the image and perform prediction
-def predict_image(image):
-    # Preprocessing: adjust size and normalization as required by your model.
-    transform = transforms.Compose([
-        transforms.Resize((224, 224)),
-        transforms.ToTensor(),
-        transforms.Normalize(mean=[0.485, 0.456, 0.406],
-                             std=[0.229, 0.224, 0.225])
-    ])
-    image = transform(image).unsqueeze(0)  # add batch dimension
-    with torch.no_grad():
-        output = model(image)
-        probability = torch.sigmoid(output).item()
-    return "Yes" if probability > 0.5 else "No"
+transform = transforms.Compose([
+    transforms.Resize((224, 224)),  
+    transforms.ToTensor(),
+    transforms.Normalize([0.5], [0.5])    
+])
 
-# Route to serve the prediction page (using your existing Frontend/prediction.html)
-@app.route('/')
-def index():
-    return render_template('prediction.html')
-
-# Endpoint to handle prediction POST requests (supports multiple images)
+# ✅ Prediction API (POST Request)
 @app.route('/predict', methods=['POST'])
 def predict():
     if model is None:
@@ -53,24 +44,84 @@ def predict():
         return jsonify({"error": "No file part in the request"}), 400
 
     files = request.files.getlist('images')
-    if len(files) == 0:
+    if not files:
         return jsonify({"error": "No files provided"}), 400
 
     predictions = []
     for file in files:
         try:
-            # Uncomment the following lines if you wish to save the files:
-            # filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
-            # file.save(filepath)
-            
-            # Open the image directly from the file stream
             image = Image.open(file.stream).convert('RGB')
-            result = predict_image(image)
-            predictions.append({"filename": file.filename, "result": result})
+            result, suggestion = predict_image(image)
+            predictions.append({"filename": file.filename, "result": result, "suggestion": suggestion})
         except Exception as e:
-            predictions.append({"filename": file.filename, "result": "Error", "error": str(e)})
+            predictions.append({"filename": file.filename, "result": "Error", "error": str(e), "suggestion": "No suggestion available"})
 
     return jsonify({"predictions": predictions})
+
+
+def predict_image(image):
+    try:
+        print("🔄 Preprocessing image for prediction...")  # Debugging
+        image = transform(image).unsqueeze(0) 
+        print("📨 Sending image to model for prediction...")  # Debugging
+
+        with torch.no_grad():
+            output = model(image)  # Output is a tensor of shape [1, 2]
+        
+        print(f"🔢 Raw model output: {output}")  # Debugging
+
+        # ✅ Check first value in output tensor
+        if output[0][0].item() > 1:  
+            result = "Negative"
+        else:
+            result = "Positive"
+
+        # ✅ Generate Suggestion Based on Result
+        suggestion = (
+            "⚠️ Glaucoma detected. Immediate medical consultation is strongly recommended."
+            if result == "Positive"
+            else "✅ No signs of glaucoma detected. Maintain regular eye check-ups for safety."
+        )
+
+        print(f"✅ Prediction: {result} | Suggestion: {suggestion}")  # Debugging
+
+        return result, suggestion  
+
+    except Exception as e:
+        print(f"❌ Error processing image: {e}")  # Debugging
+        return "Error", f"Error processing image: {str(e)}"
+
+
+# ✅ Generate PDF Report
+@app.route('/generate_pdf', methods=['POST'])
+def generate_pdf():
+    data = request.json  # Receive JSON data from frontend
+
+    buffer = io.BytesIO()
+    pdf = canvas.Canvas(buffer, pagesize=letter)
+    pdf.setTitle("Patient Diagnosis Report")
+
+    pdf.setFont("Helvetica-Bold", 16)
+    pdf.drawString(200, 750, "Patient Diagnosis Report")
+    
+    pdf.setFont("Helvetica", 12)
+    pdf.drawString(50, 700, f"Patient Name: {data['patient_name']}")
+    pdf.drawString(50, 680, f"Age: {data['age']}")
+    pdf.drawString(50, 660, f"Date: {data['date']}")
+    
+    y_position = 640
+    for pred in data['predictions']:
+        pdf.drawString(50, y_position, f"Image: {pred['filename']}")
+        pdf.drawString(50, y_position - 20, f"Result: {pred['result']}")
+        pdf.drawString(50, y_position - 40, f"Suggestion: {pred['suggestion']}")
+        
+        y_position -= 80  # Move to the next block
+
+    pdf.showPage()
+    pdf.save()
+    
+    buffer.seek(0)
+    return send_file(buffer, as_attachment=True, download_name="diagnosis_report.pdf", mimetype="application/pdf")
 
 if __name__ == '__main__':
     app.run(debug=True, port=5002)
