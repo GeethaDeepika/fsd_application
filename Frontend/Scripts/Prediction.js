@@ -182,7 +182,6 @@ function submitPrediction() {
     });
     
 }
-
 function downloadPDF() {
     const reportData = {
         patient_name: "John Doe",
@@ -194,7 +193,9 @@ function downloadPDF() {
     document.querySelectorAll("#predictionResult hr").forEach((_, index) => {
         const filename = document.querySelectorAll("#predictionResult strong")[index * 5 + 3].nextSibling.nodeValue.trim();
         const result = document.querySelectorAll("#predictionResult strong")[index * 5 + 4].nextSibling.nodeValue.trim();
-        reportData.predictions.push({ filename, result });
+        const suggestion = document.querySelectorAll("#predictionResult strong")[index * 5 + 5].nextSibling.nodeValue.trim();  // ✅ Now includes suggestion
+
+        reportData.predictions.push({ filename, result, suggestion });
     });
 
     fetch("http://localhost:5002/generate_pdf", {

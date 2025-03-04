@@ -91,8 +91,6 @@ def predict_image(image):
         print(f"❌ Error processing image: {e}")  # Debugging
         return "Error", f"Error processing image: {str(e)}"
 
-
-# ✅ Generate PDF Report
 @app.route('/generate_pdf', methods=['POST'])
 def generate_pdf():
     data = request.json  # Receive JSON data from frontend
@@ -105,16 +103,19 @@ def generate_pdf():
     pdf.drawString(200, 750, "Patient Diagnosis Report")
     
     pdf.setFont("Helvetica", 12)
-    pdf.drawString(50, 700, f"Patient Name: {data['patient_name']}")
-    pdf.drawString(50, 680, f"Age: {data['age']}")
-    pdf.drawString(50, 660, f"Date: {data['date']}")
+    pdf.drawString(50, 700, f"Patient Name: {data.get('patient_name', 'Unknown')}")
+    pdf.drawString(50, 680, f"Age: {data.get('age', 'N/A')}")
+    pdf.drawString(50, 660, f"Date: {data.get('date', 'N/A')}")
     
     y_position = 640
     for pred in data['predictions']:
-        pdf.drawString(50, y_position, f"Image: {pred['filename']}")
-        pdf.drawString(50, y_position - 20, f"Result: {pred['result']}")
-        pdf.drawString(50, y_position - 40, f"Suggestion: {pred['suggestion']}")
+        pdf.drawString(50, y_position, f"Image: {pred.get('filename', 'Unknown')}")
+        pdf.drawString(50, y_position - 20, f"Result: {pred.get('result', 'Error')}")
         
+        # ✅ Fix: Handle missing 'suggestion' key properly
+        suggestion = pred.get('suggestion', 'No suggestion available')
+        pdf.drawString(50, y_position - 40, f"Suggestion: {suggestion}")
+
         y_position -= 80  # Move to the next block
 
     pdf.showPage()
