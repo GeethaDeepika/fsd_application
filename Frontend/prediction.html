@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./Styles/PredictionStyles.css">
 </head>
 <body>
-    <!-- Navbar -->
+
     <nav class="navbar">
         <div class="welcome-text">Hello, <span id="userName">John</span>!</div>
         <button class="logout-btn" onclick="showLogoutPopup()">Logout</button>
@@ -23,7 +23,7 @@
     </div>
 
     <div class="container">
-        <!-- History Section -->
+
         <section class="history-section">
             <div class="history-header">
                 <h2>Patient History</h2>
@@ -58,7 +58,7 @@
             </table>
         </section>
 
-        <!-- Detection Cards -->
+
         <div class="detection-cards">
             <div class="detection-card">
                 <i class="fas fa-eye card-icon"></i>
@@ -85,25 +85,131 @@
         </div>
     </div>
 
-    <!-- Chatbot Toggle Button -->
+
     <div class="chatbot-toggle">
         <i class="fas fa-comments fa-lg"></i>
     </div>
 
-    <!-- Chatbot Container -->
+
     <div class="chatbot-container">
         <div class="chatbot-header">
             <h3>Medical Assistant</h3>
             <i class="fas fa-times" style="cursor: pointer;"></i>
         </div>
         <div class="chatbot-messages">
-            <!-- Messages will be added here -->
+
         </div>
         <div class="chatbot-input">
             <input type="text" placeholder="Type your message...">
             <button><i class="fas fa-paper-plane"></i></button>
         </div>
     </div>
+    <script src="./Scripts/Prediction.js"></script>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disease Detection Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    <link rel="stylesheet" href="./Styles/PredictionStyles.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="welcome-text">Hello, <span id="userName">John</span>!</div>
+        <button class="logout-btn" onclick="showLogoutPopup()">Logout</button>
+    </nav>
+
+    <div id="logoutPopup" class="popup">
+        <div class="popup-content">
+            <p>Are you sure you want to logout?</p>
+            <button id="logoutConfirmBtn">Yes, Logout</button>
+            <button onclick="closeLogoutPopup()">No</button>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <section class="history-section">
+            <div class="history-header">
+                <h2>Patient History</h2>
+                <button class="upload-btn">Export History</button>
+            </div>
+            <table class="history-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Test Type</th>
+                        <th>Result</th>
+                        <th>Confidence</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2024-02-06</td>
+                        <td>Glaucoma Detection</td>
+                        <td>Negative</td>
+                        <td>98%</td>
+                        <td><a href="#" style="color: #0077b6;">View Details</a></td>
+                    </tr>
+                    <tr>
+                        <td>2024-02-05</td>
+                        <td>DR Detection</td>
+                        <td>Positive</td>
+                        <td>95%</td>
+                        <td><a href="#" style="color: #0077b6;">View Details</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <div class="detection-cards">
+            <div class="detection-card">
+                <i class="fas fa-eye card-icon"></i>
+                <h3>Glaucoma Detection</h3>
+                <p>Upload retinal images for glaucoma detection using our advanced AI model.</p>
+                
+                <input type="file" id="glaucomaImageInput" accept="image/*" hidden>
+                <button class="upload-btn" onclick="document.getElementById('glaucomaImageInput').click();">
+                    <i class="fas fa-upload"></i> Upload Image
+                </button>
+                
+                <div id="glaucomaPreviewContainer" class="preview-container"></div>
+
+                <!-- Patient Details Form -->
+                <div id="patientDetailsForm" class="patient-form">
+                    <h3>Patient Details</h3>
+                    
+                    <label>Full Name:</label>
+                    <input type="text" id="patientName" required>
+
+                    <label>Date of Birth:</label>
+                    <input type="date" id="patientDOB" required>
+
+                    <label>Phone Number:</label>
+                    <input type="text" id="patientPhone" required>
+
+                    <label>Address:</label>
+                    <input type="text" id="patientAddress" required>
+
+                    <label>Nationality:</label>
+                    <input type="text" id="patientNationality" required>
+                </div>
+
+                <button class="submit-btn" id="predictBtn" onclick="submitPrediction()">Submit for Prediction</button>
+                <button class="upload-btn" onclick="downloadPDF()">Download Report as PDF</button>
+
+                <div id="predictionResult"></div>
+            </div>
+        </div>
+    </div>
+
     <script src="./Scripts/Prediction.js"></script>
 </body>
 </html>
