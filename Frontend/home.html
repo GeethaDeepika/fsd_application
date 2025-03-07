@@ -96,128 +96,134 @@
         </div>
     </section>
 
-    <!-- Glaucoma Section -->
-    <section id="glaucoma" class="disease-section">
+    <!-- Glaucoma Section -->   
+    <section id="glaucoma" class="glaucoma-section">
         <div class="container">
-            <h2 class="text-center mb-5 animate__animated animate__fadeIn">Understanding Glaucoma</h2>
-            <div class="row align-items-center">
-                <div class="col-lg-6 animate__animated animate__fadeInLeft">
-                    <div class="disease-info-card">
-                        <h3 class="mb-4">What is Glaucoma?</h3>
-                        <p class="lead">Glaucoma is a group of eye conditions that damage the optic nerve, essential for good vision.</p>
-                        
-                        <div class="info-blocks mt-4">
-                            <div class="info-block mb-4">
-                                <h4><i class="fas fa-exclamation-triangle text-warning me-2"></i>Common Symptoms</h4>
-                                <ul class="list-unstyled">
-                                    <li><i class="fas fa-check text-success me-2"></i>Gradual loss of peripheral vision</li>
-                                    <li><i class="fas fa-check text-success me-2"></i>Eye pain and headaches</li>
-                                    <li><i class="fas fa-check text-success me-2"></i>Blurred vision</li>
-                                    <li><i class="fas fa-check text-success me-2"></i>Rainbow-colored halos around lights</li>
-                                </ul>
-                            </div>
-                            
-                            <div class="info-block mb-4">
-                                <h4><i class="fas fa-search me-2"></i>Risk Factors</h4>
-                                <ul class="list-unstyled">
-                                    <li><i class="fas fa-circle text-primary me-2"></i>Age over 60</li>
-                                    <li><i class="fas fa-circle text-primary me-2"></i>Family history</li>
-                                    <li><i class="fas fa-circle text-primary me-2"></i>High eye pressure</li>
-                                    <li><i class="fas fa-circle text-primary me-2"></i>Certain medical conditions</li>
-                                </ul>
-                            </div>
-                        </div>
+            <!-- <h2 class="animate__animated animate__fadeIn">Understanding Glaucoma</h2> -->
+            <div class="row">
+                <!-- What is Glaucoma? -->
+                <div class="col-md-4 animate__animated animate__fadeInUp">
+                    <div class="glaucoma-card">
+                        <i class="fas fa-eye glaucoma-icon"></i>
+                        <h3>What is Glaucoma?</h3>
+                        <p>Glaucoma is a group of eye conditions that damage the optic nerve, essential for vision.</p>
+                    </div>
+                </div>
 
-                        <div class="text-center mt-4">
-                            <a href="#symptoms" class="btn btn-primary btn-custom me-3">Learn More</a>
-                            <a href="#prevention" class="btn btn-outline-primary btn-custom">Prevention Tips</a>
-                        </div>
+                <!-- Symptoms -->
+                <div class="col-md-4 animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
+                    <div class="glaucoma-card">
+                        <h3><i class="fas fa-exclamation-triangle text-warning me-2"></i> Common Symptoms</h3>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-eye-slash text-danger me-2"></i> Gradual loss of peripheral vision</li>
+                            <li><i class="fas fa-head-side-virus text-warning me-2"></i> Eye pain and headaches</li>
+                            <li><i class="fas fa-low-vision text-info me-2"></i> Blurred vision</li>
+                            <li><i class="fas fa-lightbulb text-primary me-2"></i> Rainbow-colored halos around lights</li>
+                        </ul>
                     </div>
                 </div>
-                <div class="col-lg-6 animate__animated animate__fadeInRight">
-                    <div class="image-container position-relative">
-                        <img src="/api/placeholder/600/400" alt="Glaucoma Illustration" class="img-fluid rounded-lg shadow-lg">
-                        <div class="image-overlay">
-                            <div class="stat-box">
-                                <h4>Did You Know?</h4>
-                                <p>Over 3 million Americans have glaucoma, but only half know they have it.</p>
-                            </div>
-                        </div>
+
+
+                <!-- Risk Factors -->
+                <div class="col-md-4 animate__animated animate__fadeInUp" style="animation-delay: 0.4s">
+                    <div class="glaucoma-card">
+                        <h3><i class="fas fa-search me-2"></i>Risk Factors</h3>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-user-clock text-danger me-2"></i> Age over 60</li>
+                            <li><i class="fas fa-heartbeat text-warning me-2"></i>Certain medical conditions</li>
+                            <li><i class="fas fa-users text-info me-2"></i> Family history</li>
+                            <li> <i class="fas fa-eye text-primary me-2"></i>High eye pressure</li>
+                
+                        </ul>
                     </div>
                 </div>
+            </div>
+
+            <!-- <div class="text-center mt-4">
+                <a href="#symptoms" class="btn btn-primary glaucoma-btn">Learn More</a>
+                <a href="#prevention" class="btn btn-outline-primary glaucoma-btn">Prevention Tips</a>
+            </div> -->
+
+            <!-- Did You Know Section -->
+            <div class="did-you-know animate__animated animate__fadeInUp">
+                <h3>Did You Know?</h3>
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-lightbulb"></i> Over 3 million Americans have glaucoma, but only half know they have it.</li>
+                    <li><i class="fas fa-lightbulb"></i> Glaucoma is the second leading cause of blindness worldwide.</li>
+                    <li><i class="fas fa-lightbulb"></i> Early detection and treatment can prevent vision loss.</li>
+                    <li><i class="fas fa-lightbulb"></i> There is no cure for glaucoma, but medication and surgery can help slow its progression.</li>
+                </ul>
             </div>
         </div>
     </section>
 
-    <!-- Diabetic Retinopathy Section -->
-    <section id="dr" class="disease-section bg-light">
-        <div class="container">
-            <h2 class="text-center mb-5 animate__animated animate__fadeIn">Diabetic Retinopathy</h2>
-            <div class="row align-items-center">
-                <div class="col-lg-6 order-lg-2 animate__animated animate__fadeInRight">
-                    <div class="disease-info-card">
-                        <h3 class="mb-4">Understanding Diabetic Retinopathy</h3>
-                        <p class="lead">A diabetes complication affecting blood vessels in the retina, potentially leading to vision loss.</p>
+<!-- Diabetic Retinopathy Section -->
+<!-- Diabetic Retinopathy Section -->
+<section id="dr" class="disease-section bg-light py-5">
+    <div class="container">
+        <h2 class="text-center mb-5 animate__animated animate__fadeIn">Diabetic Retinopathy</h2>
 
-                        <div class="stages-container mt-4">
-                            <h4 class="mb-3"><i class="fas fa-chart-line me-2"></i>Stages of DR</h4>
-                            <div class="stage-blocks">
-                                <div class="stage-block">
-                                    <span class="stage-number">1</span>
-                                    <h5>Mild NPDR</h5>
-                                    <p>Small areas of balloon-like swelling in retina's blood vessels</p>
-                                </div>
-                                <div class="stage-block">
-                                    <span class="stage-number">2</span>
-                                    <h5>Moderate NPDR</h5>
-                                    <p>Some blood vessels that nourish the retina become blocked</p>
-                                </div>
-                                <div class="stage-block">
-                                    <span class="stage-number">3</span>
-                                    <h5>Severe NPDR</h5>
-                                    <p>More blood vessels become blocked, leading to areas of the retina being deprived of blood supply</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="treatment-options mt-4">
-                            <h4><i class="fas fa-hospital-user me-2"></i>Treatment Options</h4>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <ul class="list-unstyled">
-                                        <li><i class="fas fa-check-circle text-success me-2"></i>Laser Treatment</li>
-                                        <li><i class="fas fa-check-circle text-success me-2"></i>Anti-VEGF Therapy</li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-6">
-                                    <ul class="list-unstyled">
-                                        <li><i class="fas fa-check-circle text-success me-2"></i>Vitrectomy</li>
-                                        <li><i class="fas fa-check-circle text-success me-2"></i>Regular Monitoring</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="text-center mt-4">
-                            <a href="#symptoms-dr" class="btn btn-primary btn-custom me-3">Symptoms</a>
-                            <a href="#treatment-dr" class="btn btn-outline-primary btn-custom">Treatment Options</a>
-                        </div>
+        <!-- Card Layout -->
+        <div class="row g-4">
+            <!-- What is DR & Treatment Options -->
+            <div class="col-lg-6 animate__animated animate__fadeInUp">
+                <div class="card dr-card shadow-lg h-100">
+                    <div class="card-body">
+                        <h3 class="card-title text-center"><i class="fas fa-eye text-primary me-2"></i> Understanding DR</h3>
+                        <p class="card-text text-center">
+                            Diabetic Retinopathy (DR) is a diabetes complication affecting the blood vessels in the retina, which can lead to vision loss.
+                        </p>
+                        <hr>
+                        <h4 class="card-title text-center"><i class="fas fa-prescription-bottle-alt text-success me-2"></i> Treatment Options</h4>
+                        <ul class="list-unstyled text-center">
+                            <li><i class="fas fa-laser text-danger me-2"></i> Laser Treatment</li>
+                            <li><i class="fas fa-vial text-warning me-2"></i> Anti-VEGF Therapy</li>
+                            <li><i class="fas fa-heartbeat text-danger me-2"></i> Blood Sugar Control</li>
+                            <li><i class="fas fa-stethoscope text-primary me-2"></i> Regular Eye Check-ups</li>
+                        </ul>
                     </div>
                 </div>
-                <div class="col-lg-6 order-lg-1 animate__animated animate__fadeInLeft">
-                    <div class="image-container position-relative">
-                        <img src="/api/placeholder/600/400" alt="Diabetic Retinopathy Illustration" class="img-fluid rounded-lg shadow-lg">
-                        <div class="image-overlay">
-                            <div class="stat-box">
-                                <h4>Warning Signs</h4>
-                                <p>Early detection and treatment can reduce the risk of blindness by 95%</p>
-                            </div>
-                        </div>
+            </div>
+
+            <!-- Stages of DR -->
+            <div class="col-lg-6 animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
+                <div class="card dr-card shadow-lg h-100">
+                    <div class="card-body">
+                        <h3 class="card-title text-center"><i class="fas fa-chart-pie text-warning me-2"></i> Stages of DR</h3>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-seedling text-success me-2"></i><strong> Mild NPDR:</strong> Small swelling in retinal blood vessels.</li>
+                            <li><i class="fas fa-tint text-primary me-2"></i><strong> Moderate NPDR:</strong> Some blood vessels get blocked.</li>
+                            <li><i class="fas fa-exclamation-triangle text-warning me-2"></i><strong> Severe NPDR:</strong> Large blockages cause retina damage.</li>
+                            <li><i class="fas fa-exclamation-circle text-danger me-2"></i><strong> Proliferative DR:</strong> Fragile new blood vessels form, increasing the risk of bleeding.</li>
+                            <li><i class="fas fa-eye-slash text-dark me-2"></i><strong> Advanced DR:</strong> Significant vision loss due to bleeding and scarring.</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+
+        <!-- Did You Know? Section -->
+        <div class="row mt-5">
+            <div class="col-lg-8 mx-auto animate__animated animate__fadeInUp">
+                <div class="card did-you-know-card shadow-lg">
+                    <div class="card-body text-center">
+                        <h4 class="card-title"><i class="fas fa-lightbulb text-warning me-2"></i> Did You Know?</h4>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-exclamation-circle text-danger me-2"></i> DR is the leading cause of blindness in adults.</li>
+                            <li><i class="fas fa-eye text-primary me-2"></i> Early detection can prevent up to <strong>95%</strong> of vision loss cases.</li>
+                            <li><i class="fas fa-syringe text-info me-2"></i> Proper diabetes management significantly reduces the risk of DR.</li>
+                            <li><i class="fas fa-heartbeat text-danger me-2"></i> High blood pressure increases the risk of diabetic retinopathy.</li>
+                            <li><i class="fas fa-stethoscope text-success me-2"></i> Annual eye exams are crucial for diabetic patients.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
 
 
     <section id="developers" class="developers-section bg-light py-5">

@@ -238,6 +238,183 @@
   animation: float 20s infinite;
 }
 
+/* Glaucoma Section Styling */
+.glaucoma-section {
+  padding: 6rem 0;
+  background-color: #f8f9fa;
+}
+
+/* Glaucoma Cards */
+.glaucoma-card {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  text-align: center;
+  transition: transform 0.3s ease-in-out;
+  height: 100%; /* Ensures equal height for all cards */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.glaucoma-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Glaucoma Section Header */
+.glaucoma-section h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--primary-color);
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* Glaucoma Icon */
+.glaucoma-icon {
+  font-size: 3rem;
+  color: var(--primary-color);
+  display: block;
+  margin-bottom: 1rem;
+}
+
+/* Glaucoma Info Blocks */
+.info-block ul {
+  padding-left: 0;
+  list-style: none;
+}
+
+.info-block ul li {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.info-block ul li i {
+  color: var(--primary-color);
+  margin-right: 8px;
+}
+
+/* "Did You Know?" Section */
+.did-you-know {
+  background: linear-gradient(135deg, #4834d4, #686de0);
+  color: white;
+  padding: 3rem;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.did-you-know h3 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.did-you-know ul {
+  list-style: none;
+  padding: 0;
+}
+
+.did-you-know ul li {
+  font-size: 1.2rem;
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.did-you-know ul li i {
+  margin-right: 10px;
+  font-size: 1.5rem;
+  color: #ffdd57;
+}
+
+/* Buttons */
+.glaucoma-btn {
+  margin-top: 1rem;
+  font-size: 1.1rem;
+  padding: 0.8rem 2rem;
+}
+/* DR Cards - Uniform Size */
+.dr-card {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  transition: transform 0.3s ease-in-out;
+  height: 100%; /* Ensures all cards have the same height */
+}
+
+.dr-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Card Title Styling */
+.dr-card h3 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+/* List Styling */
+.dr-card ul {
+  padding-left: 0;
+}
+
+.dr-card li {
+  list-style: none;
+  font-size: 1rem;
+  margin-bottom: 8px;
+}
+
+/* Did You Know Card */
+.did-you-know-card {
+  background: linear-gradient(135deg, #4834d4, #686de0);
+  color: white;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.did-you-know-card h4 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.did-you-know-card ul {
+  padding-left: 0;
+}
+
+.did-you-know-card li {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.did-you-know-card li i {
+  font-size: 1.5rem;
+  margin-right: 10px;
+}
+
+/* Ensure Equal Card Heights */
+.row.g-4 .col-lg-6 {
+  display: flex;
+}
+
+.row.g-4 .dr-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 @keyframes float {
   0% { transform: translateY(0) rotate(0deg); }
   100% { transform: translateY(-100vh) rotate(360deg); }

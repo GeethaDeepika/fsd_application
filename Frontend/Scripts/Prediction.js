@@ -108,7 +108,6 @@ function prevStep() {
 // Initialize form
 updateForm();
 
-
 function submitPrediction() {
     const inputElement = document.getElementById("glaucomaImageInput");
     const files = inputElement.files;
@@ -214,51 +213,90 @@ function downloadPDF() {
     });
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-    const drInput = document.getElementById("drImageInput");
-    const drPreviewContainer = document.getElementById("drPreviewContainer");
 
-    drInput.addEventListener("change", function(event) {
-        const files = event.target.files;
-        drPreviewContainer.innerHTML = ""; // Clear previous previews
+// ✅ DR Multi-Step Form Logic
+document.addEventListener("DOMContentLoaded", function () {
+    let drStep = 0;
+    const drSteps = document.querySelectorAll("#drpatientDetailsForm .form-step");
+    const drDots = document.querySelectorAll("#drpatientDetailsForm .dot");
+    const drPrevBtn = document.querySelector("#drpatientDetailsForm .prev-btn");
+    const drNextBtn = document.querySelector("#drpatientDetailsForm .next-btn");
+    const drSubmitBtn = document.querySelector("#submitDrBtn");
 
-        if (files.length > 0) {
-            Array.from(files).forEach((file) => {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const previewDiv = document.createElement("div");
-                    previewDiv.classList.add("preview-item");
+    function updateDrForm() {
+        drSteps.forEach((step, index) => {
+            step.style.display = index === drStep ? "block" : "none";
+        });
 
-                    const img = document.createElement("img");
-                    img.src = e.target.result;
-                    img.classList.add("preview-image");
+        drDots.forEach((dot, index) => {
+            dot.classList.toggle("active", index === drStep);
+        });
 
-                    const closeIcon = document.createElement("span");
-                    closeIcon.innerHTML = "&times;"; // Close button
-                    closeIcon.classList.add("close-icon");
-                    closeIcon.onclick = function() {
-                        previewDiv.remove();
-                        drInput.value = ""; // Reset input if removed
-                    };
+        drPrevBtn.disabled = drStep === 0;
+        drNextBtn.style.display = drStep === drSteps.length - 1 ? "none" : "inline-block";
+        drSubmitBtn.style.display = drStep === drSteps.length - 1 ? "inline-block" : "none";
+    }
 
-                    previewDiv.appendChild(img);
-                    previewDiv.appendChild(closeIcon);
-                    drPreviewContainer.appendChild(previewDiv);
-                };
-                reader.readAsDataURL(file);
-            });
+    window.nextDrStep = function () {
+        if (drStep < drSteps.length - 1) {
+            drStep++;
+            updateDrForm();
         }
-    });
+    };
+
+    window.prevDrStep = function () {
+        if (drStep > 0) {
+            drStep--;
+            updateDrForm();
+        }
+    };
+
+    updateDrForm();
 });
 
 
-// ✅ Submit DR Prediction
+
+
+// ✅ DR Image Preview Handling
+document.getElementById("drImageInput").addEventListener("change", function (event) {
+    const files = event.target.files;
+    const drPreviewContainer = document.getElementById("drPreviewContainer");
+    drPreviewContainer.innerHTML = ""; 
+
+    if (files.length > 0) {
+        Array.from(files).forEach((file) => {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const previewDiv = document.createElement("div");
+                previewDiv.classList.add("preview-item");
+
+                const img = document.createElement("img");
+                img.src = e.target.result;
+                img.classList.add("preview-image");
+
+                const closeIcon = document.createElement("span");
+                closeIcon.innerHTML = "&times;";
+                closeIcon.classList.add("close-icon");
+                closeIcon.onclick = function () {
+                    previewDiv.remove();
+                    document.getElementById("drImageInput").value = ""; 
+                };
+
+                previewDiv.appendChild(img);
+                previewDiv.appendChild(closeIcon);
+                drPreviewContainer.appendChild(previewDiv);
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+});
+
 function submitDrPrediction() {
     const inputElement = document.getElementById("drImageInput");
     const files = inputElement.files;
 
     if (files.length === 0) {
-        alert("Please select at least one image for prediction.");
+        alert("Please select at least one image for DR prediction.");
         return;
     }
 
@@ -267,7 +305,7 @@ function submitDrPrediction() {
         formData.append("images", files[i]);
     }
 
-    fetch("http://localhost:5003/predict_dr", {  // ✅ DR API on port 5003
+    fetch("http://localhost:5003/predict_dr", {
         method: "POST",
         body: formData
     })
@@ -290,5 +328,68 @@ function submitDrPrediction() {
     })
     .catch(error => {
         console.error("Error during DR prediction:", error);
+    });
+}
+
+function downloadDrPDF() {
+    // 🔹 Get Patient Details from Form
+    const patientName = document.getElementById("drpatientName").value || "Unknown";
+    const dob = document.getElementById("drpatientDOB").value || "N/A";
+    const phone = document.getElementById("drpatientPhone").value || "N/A";
+    const address = document.getElementById("drpatientAddress").value || "N/A";
+    const nationality = document.getElementById("drpatientNationality").value || "N/A";
+
+    // 🔹 Calculate Age from DOB
+    let age = "N/A";
+    if (dob !== "N/A") {
+        const birthDate = new Date(dob);
+        const today = new Date();
+        age = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+            age--; // Adjust for incomplete year
+        }
+    }
+
+    // 🔹 Prepare Report Data
+    const reportData = {
+        patient_name: patientName,
+        dob: dob,
+        age: age,
+        phone: phone,
+        address: address,
+        nationality: nationality,
+        date: new Date().toLocaleDateString(),
+        predictions: []
+    };
+
+    // 🔹 Extract Predictions from UI
+    document.querySelectorAll("#drPredictionResult hr").forEach((_, index) => {
+        const filename = document.querySelectorAll("#drPredictionResult strong")[index * 3].nextSibling.nodeValue.trim();
+        const result = document.querySelectorAll("#drPredictionResult strong")[index * 3 + 1].nextSibling.nodeValue.trim();
+        const confidence = document.querySelectorAll("#drPredictionResult strong")[index * 3 + 2].nextSibling.nodeValue.trim();
+        const suggestion = document.querySelectorAll("#drPredictionResult strong")[index * 3 + 3].nextSibling.nodeValue.trim();
+
+        reportData.predictions.push({ filename, result, confidence, suggestion });
+    });
+
+    // 🔹 Send Data to Backend for PDF Generation
+    fetch("http://localhost:5003/generate_dr_pdf", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(reportData)
+    })
+    .then(response => response.blob())
+    .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "diabetic_retinopathy_report.pdf";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    })
+    .catch(error => {
+        console.error("Error generating DR PDF report:", error);
     });
 }
