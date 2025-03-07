@@ -267,6 +267,114 @@ body {
     cursor: pointer;
 }
 
+.patient-form {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    width: 100%;
+    max-width: 450px;
+    margin: 40px auto; /* Adds more space around the form */
+    text-align: center;
+    position: relative;
+    transition: transform 0.3s ease-in-out;
+}
+
+.form-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #0077b6;
+    text-transform: uppercase;
+}
+
+.form-step {
+    display: none;
+    transition: transform 0.3s ease-in-out;
+}
+
+.form-step.active {
+    display: block;
+}
+
+.form-step h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #005c8f;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 13px;
+}
+
+.form-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.prev-btn, .next-btn, .submit-btn {
+    background: #0077b6;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.prev-btn:hover, .next-btn:hover, .submit-btn:hover {
+    background: #005c8f;
+}
+
+.progress-indicators {
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    background: #ddd;
+    border-radius: 50%;
+    margin: 0 6px;
+    transition: background 0.3s ease;
+}
+
+.dot.active {
+    background: #0077b6;
+    width: 13px;
+    height: 13px;
+}
+
+.upload-btn {
+    margin-bottom: 20px;
+    background: #0077b6;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 8px;
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+}
+
+.upload-btn:hover {
+    background: #005c8f;
+}
+
+/* Adds spacing between upload button and card */
+.detection-card {
+    margin-top: 30px;
+}
+
 
 @media (max-width: 768px) {
     .detection-cards {

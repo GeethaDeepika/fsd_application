@@ -1,71 +1,3 @@
-// document.addEventListener("DOMContentLoaded", function() {
-//     const user = JSON.parse(localStorage.getItem("user"));
-//     if (user) {
-//         document.getElementById("userName").textContent = user.firstName || "User";
-//     } else {
-//         window.location.href = "login.html"; // Redirect to login if not authenticated
-//     }
-
-//     const glaucomaInput = document.getElementById("glaucomaImageInput");
-//     const previewContainer = document.getElementById("glaucomaPreviewContainer");
-
-//     glaucomaInput.addEventListener("change", function(event) {
-//         const files = event.target.files;
-
-//         if (files.length > 0) {
-//             Array.from(files).forEach((file, index) => {
-//                 const reader = new FileReader();
-//                 reader.onload = function(e) {
-//                     const previewDiv = document.createElement("div");
-//                     previewDiv.classList.add("preview-item");
-
-//                     const img = document.createElement("img");
-//                     img.src = e.target.result;
-//                     img.classList.add("preview-image");
-
-//                     const closeIcon = document.createElement("span");
-//                     closeIcon.innerHTML = "&times;"; // Cross mark
-//                     closeIcon.classList.add("close-icon");
-//                     closeIcon.onclick = function() {
-//                         previewDiv.remove();
-//                     };
-
-//                     previewDiv.appendChild(img);
-//                     previewDiv.appendChild(closeIcon);
-//                     previewContainer.appendChild(previewDiv);
-//                 };
-//                 reader.readAsDataURL(file);
-//             });
-//         }
-//     });
-// });
-
-// document.getElementById("logoutConfirmBtn").addEventListener("click", confirmLogout);
-
-// // Show logout confirmation popup
-// function showLogoutPopup() {
-//     document.getElementById("logoutPopup").style.display = "flex";
-// }
-
-// // Close the popup
-// function closeLogoutPopup() {
-//     document.getElementById("logoutPopup").style.display = "none";
-// }
-
-// // Confirm and perform logout
-// function confirmLogout() {
-//     localStorage.removeItem("token");
-//     localStorage.removeItem("user");
-//     document.getElementById("logoutPopup").style.display = "none"; // Hide popup
-//     window.location.href = "login.html"; // Redirect to login page
-// }
-
-// // Remove uploaded image
-// function removeGlaucomaImage() {
-//     document.getElementById("glaucomaImageInput").value = "";
-//     document.getElementById("glaucomaPreviewContainer").style.display = "none";
-// }
-
 document.addEventListener("DOMContentLoaded", function() {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user) {
@@ -135,89 +67,47 @@ function removeGlaucomaImage() {
     document.getElementById("glaucomaPreviewContainer").style.display = "none";
 }
 
-// // New function to submit images for prediction
-// function submitPrediction() {
-//     const inputElement = document.getElementById("glaucomaImageInput");
-//     const files = inputElement.files;
+//remove dr image 
+function removeDrImage() {
+    document.getElementById("drImageInput").value = "";
+    document.getElementById("drPreviewContainer").style.display = "none";
+}
 
-//     if (files.length === 0) {
-//         alert("Please select at least one image for prediction.");
-//         return;
-//     }
+let currentStep = 0;
+const formSteps = document.querySelectorAll(".form-step");
+const prevBtn = document.querySelector(".prev-btn");
+const nextBtn = document.querySelector(".next-btn");
+const submitBtn = document.querySelector("#submitBtn");
+const dots = document.querySelectorAll(".dot");
 
-//     const formData = new FormData();
-//     for (let i = 0; i < files.length; i++) {
-//         formData.append("images", files[i]);
-//     }
+function updateForm() {
+    formSteps.forEach((step, index) => {
+        step.classList.toggle("active", index === currentStep);
+        dots[index].classList.toggle("active", index === currentStep);
+    });
 
-//     fetch("http://localhost:5002/predict", {
-//         method: "POST",
-//         body: formData
-//     })
-//     .then(response => response.json())
-//     .then(data => {
-//         const predictionResult = document.getElementById("predictionResult");
-//         let reportHTML = `<h3>Diagnosis Report</h3>`;
+    prevBtn.disabled = currentStep === 0;
+    nextBtn.style.display = currentStep === formSteps.length - 1 ? "none" : "inline-block";
+    submitBtn.style.display = currentStep === formSteps.length - 1 ? "inline-block" : "none";
+}
 
-//         data.predictions.forEach(pred => {
-//             let suggestion = (pred.result === "Positive") 
-//                 ? "⚠️ Glaucoma detected. Immediate medical consultation is strongly recommended."
-//                 : "✅ No signs of glaucoma detected. Maintain regular eye check-ups.";
-        
-//             reportHTML += `
-//                 <p><strong>Patient Name:</strong> John Doe</p>
-//                 <p><strong>Age:</strong> 45</p>
-//                 <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
-//                 <p><strong>Image:</strong> ${pred.filename}</p>
-//                 <p><strong>Result:</strong> ${pred.result}</p>
-//                 <p><strong>Suggestion:</strong> ${suggestion}</p>  <!-- ✅ Now only one suggestion appears -->
-//                 <hr>
-//             `;
-//         });
-        
-//         predictionResult.innerHTML = reportHTML;
-//     })
-//     .catch(error => {
-//         console.error("Error during prediction:", error);
-//     });
-    
-// }
+function nextStep() {
+    if (currentStep < formSteps.length - 1) {
+        currentStep++;
+        updateForm();
+    }
+}
 
-// function downloadPDF() {
-//     const reportData = {
-//         patient_name: "John Doe",
-//         age: 45,
-//         date: new Date().toLocaleDateString(),
-//         predictions: []
-//     };
+function prevStep() {
+    if (currentStep > 0) {
+        currentStep--;
+        updateForm();
+    }
+}
 
-//     document.querySelectorAll("#predictionResult hr").forEach((_, index) => {
-//         const filename = document.querySelectorAll("#predictionResult strong")[index * 5 + 3].nextSibling.nodeValue.trim();
-//         const result = document.querySelectorAll("#predictionResult strong")[index * 5 + 4].nextSibling.nodeValue.trim();
-//         const suggestion = document.querySelectorAll("#predictionResult strong")[index * 5 + 5].nextSibling.nodeValue.trim();  // ✅ Now includes suggestion
+// Initialize form
+updateForm();
 
-//         reportData.predictions.push({ filename, result, suggestion });
-//     });
-
-//     fetch("http://localhost:5002/generate_pdf", {
-//         method: "POST",
-//         headers: { "Content-Type": "application/json" },
-//         body: JSON.stringify(reportData)
-//     })
-//     .then(response => response.blob())
-//     .then(blob => {
-//         const url = window.URL.createObjectURL(blob);
-//         const a = document.createElement("a");
-//         a.href = url;
-//         a.download = "diagnosis_report.pdf";
-//         document.body.appendChild(a);
-//         a.click();
-//         document.body.removeChild(a);
-//     })
-//     .catch(error => {
-//         console.error("Error generating PDF:", error);
-//     });
-// }
 
 function submitPrediction() {
     const inputElement = document.getElementById("glaucomaImageInput");
@@ -324,37 +214,81 @@ function downloadPDF() {
     });
 }
 
-// function downloadPDF() {
-//     const reportData = new FormData();
+document.addEventListener("DOMContentLoaded", function() {
+    const drInput = document.getElementById("drImageInput");
+    const drPreviewContainer = document.getElementById("drPreviewContainer");
 
-//     // ✅ Collect patient details
-//     reportData.append("Name", document.getElementById("patientName").value.trim());
-//     reportData.append("Gender", document.getElementById("patientGender").value.trim());
-//     reportData.append("Location", document.getElementById("patientLocation").value.trim());
-//     reportData.append("ID No.", document.getElementById("patientID").value.trim());
-//     reportData.append("Date of Birth", document.getElementById("patientDOB").value.trim());
-//     reportData.append("Age", document.getElementById("patientAge").value.trim());
-//     reportData.append("Nationality", document.getElementById("patientNationality").value.trim());
-//     reportData.append("Blood Sugar", document.getElementById("bloodSugar").value.trim());
+    drInput.addEventListener("change", function(event) {
+        const files = event.target.files;
+        drPreviewContainer.innerHTML = ""; // Clear previous previews
 
-//     // ✅ Collect Glaucoma result
-//     reportData.append("Glaucoma", document.getElementById("glaucomaResult").innerText);
+        if (files.length > 0) {
+            Array.from(files).forEach((file) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const previewDiv = document.createElement("div");
+                    previewDiv.classList.add("preview-item");
 
-//     fetch("http://127.0.0.1:5002/generate_pdf", {
-//         method: "POST",
-//         body: reportData
-//     })
-//     .then(response => response.blob())
-//     .then(blob => {
-//         const url = window.URL.createObjectURL(blob);
-//         const a = document.createElement("a");
-//         a.href = url;
-//         a.download = "Patient_Report.pdf";
-//         document.body.appendChild(a);
-//         a.click();
-//         document.body.removeChild(a);
-//     })
-//     .catch(error => {
-//         console.error("Error generating PDF:", error);
-//     });
-// }
+                    const img = document.createElement("img");
+                    img.src = e.target.result;
+                    img.classList.add("preview-image");
+
+                    const closeIcon = document.createElement("span");
+                    closeIcon.innerHTML = "&times;"; // Close button
+                    closeIcon.classList.add("close-icon");
+                    closeIcon.onclick = function() {
+                        previewDiv.remove();
+                        drInput.value = ""; // Reset input if removed
+                    };
+
+                    previewDiv.appendChild(img);
+                    previewDiv.appendChild(closeIcon);
+                    drPreviewContainer.appendChild(previewDiv);
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+    });
+});
+
+
+// ✅ Submit DR Prediction
+function submitDrPrediction() {
+    const inputElement = document.getElementById("drImageInput");
+    const files = inputElement.files;
+
+    if (files.length === 0) {
+        alert("Please select at least one image for prediction.");
+        return;
+    }
+
+    const formData = new FormData();
+    for (let i = 0; i < files.length; i++) {
+        formData.append("images", files[i]);
+    }
+
+    fetch("http://localhost:5003/predict_dr", {  // ✅ DR API on port 5003
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        const drPredictionResult = document.getElementById("drPredictionResult");
+        let reportHTML = `<h3>DR Diagnosis Report</h3>`;
+
+        data.predictions.forEach(pred => {
+            reportHTML += `
+                <p><strong>Image:</strong> ${pred.filename}</p>
+                <p><strong>Result:</strong> ${pred.result}</p>
+                <p><strong>Confidence:</strong> ${pred.confidence}%</p>
+                <p><strong>Suggestion:</strong> ${pred.suggestion}</p>
+                <hr>
+            `;
+        });
+
+        drPredictionResult.innerHTML = reportHTML;
+    })
+    .catch(error => {
+        console.error("Error during DR prediction:", error);
+    });
+}
