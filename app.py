@@ -100,23 +100,21 @@ def generate_pdf():
 
         # 🔹 Generate Styled Markdown Content
         markdown_content = f"""
-<center><h1><b>PREDICTION RESULTS</b></h1></center>
----
+# **GLAUCOMA DETECTION REPORT**
 
-## **📌 Patient Details**
----
-- **👤 Name**: {patient_name}
-- **📅 Date of Birth**: {dob}
-- **🔢 Age**: {age}
-- **📞 Phone Number**: {phone}
-- **🏠 Address**: {address}
-- **🌍 Nationality**: {nationality}
+## **Patient Details**
 
----
+- **Name**: {patient_name}
+- **Date of Birth**: {dob}
+- **Age**: {age}
+- **Phone Number**: {phone}
+- **Address**: {address}
+- **Nationality**: {nationality}
 
-## **🔬 Test Results**
----
-| 🖼️ Image | 🔍 Prediction |
+
+
+## **Test Results**
+| Image | Prediction |
 |---|---|
 """
         for pred in predictions:
@@ -125,10 +123,10 @@ def generate_pdf():
             markdown_content += f"| {filename} | {result} |\n"
 
         markdown_content += """
----
 
-## **🏥 Doctor's Suggestions**
----
+
+## **Doctor's Suggestions**
+
 """
         for pred in predictions:
             suggestion = pred.get('suggestion', 'No suggestion available')

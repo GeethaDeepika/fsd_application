@@ -58,116 +58,6 @@
             </table>
         </section>
 
-
-        <div class="detection-cards">
-            <div class="detection-card">
-                <i class="fas fa-eye card-icon"></i>
-                <h3>Glaucoma Detection</h3>
-                <p>Upload retinal images for glaucoma detection using our advanced AI model.</p>
-                <input type="file" id="glaucomaImageInput" accept="image/*" hidden>
-                <button class="upload-btn" onclick="document.getElementById('glaucomaImageInput').click();">
-                    <i class="fas fa-upload"></i> Upload Image
-                </button>
-                <div id="glaucomaPreviewContainer" class="preview-container"></div>
-                <button class="submit-btn" id="predictBtn" onclick="submitPrediction()">Submit for Prediction</button>
-                <button class="upload-btn" onclick="downloadPDF()">Download Report as PDF</button>
-                <p id="predictionResult"></p>
-            </div>
-
-            <div class="detection-card">
-                <i class="fas fa-microscope card-icon"></i>
-                <h3>DR Detection</h3>
-                <p>Detect diabetic retinopathy early using our machine learning algorithm.</p>
-                <button class="upload-btn">
-                    <i class="fas fa-upload"></i> Upload Image
-                </button>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="chatbot-toggle">
-        <i class="fas fa-comments fa-lg"></i>
-    </div>
-
-
-    <div class="chatbot-container">
-        <div class="chatbot-header">
-            <h3>Medical Assistant</h3>
-            <i class="fas fa-times" style="cursor: pointer;"></i>
-        </div>
-        <div class="chatbot-messages">
-
-        </div>
-        <div class="chatbot-input">
-            <input type="text" placeholder="Type your message...">
-            <button><i class="fas fa-paper-plane"></i></button>
-        </div>
-    </div>
-    <script src="./Scripts/Prediction.js"></script>
-</body>
-</html> -->
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Disease Detection Portal</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
-    <link rel="stylesheet" href="./Styles/PredictionStyles.css">
-</head>
-<body>
-
-    <nav class="navbar">
-        <div class="welcome-text">Hello, <span id="userName">John</span>!</div>
-        <button class="logout-btn" onclick="showLogoutPopup()">Logout</button>
-    </nav>
-
-    <div id="logoutPopup" class="popup">
-        <div class="popup-content">
-            <p>Are you sure you want to logout?</p>
-            <button id="logoutConfirmBtn">Yes, Logout</button>
-            <button onclick="closeLogoutPopup()">No</button>
-        </div>
-    </div>
-
-    <div class="container">
-
-        <section class="history-section">
-            <div class="history-header">
-                <h2>Patient History</h2>
-                <button class="upload-btn">Export History</button>
-            </div>
-            <table class="history-table">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Test Type</th>
-                        <th>Result</th>
-                        <th>Confidence</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>2024-02-06</td>
-                        <td>Glaucoma Detection</td>
-                        <td>Negative</td>
-                        <td>98%</td>
-                        <td><a href="#" style="color: #0077b6;">View Details</a></td>
-                    </tr>
-                    <tr>
-                        <td>2024-02-05</td>
-                        <td>DR Detection</td>
-                        <td>Positive</td>
-                        <td>95%</td>
-                        <td><a href="#" style="color: #0077b6;">View Details</a></td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-
         <div class="detection-cards">
             <div class="detection-card">
                 <i class="fas fa-eye card-icon"></i>
@@ -180,12 +70,9 @@
                 </button>
                 
                 <div id="glaucomaPreviewContainer" class="preview-container"></div>
-
-                <!-- Patient Details Form -->
                 <div id="patientDetailsForm" class="patient-form">
                     <h3>Patient Details</h3>
-                
-                    <!-- Steps -->
+            
                     <div class="form-step active">
                         <input type="text" id="patientName" placeholder="Enter PatientName" required>
                     </div>
@@ -206,14 +93,11 @@
                         <input type="text" id="patientNationality" placeholder="Enter patient nationality" required>
                     </div>
                 
-                    <!-- Navigation Buttons -->
                     <div class="form-navigation">
                         <button class="prev-btn" onclick="prevStep()" disabled>Previous</button>
                         <button class="next-btn" onclick="nextStep()">Next</button>
                         <button class="submit-btn" id="submitBtn" onclick="submitPrediction()" style="display: none;">Submit</button>
                     </div>
-                
-                    <!-- Progress Dots -->
                     <div class="progress-indicators">
                         <span class="dot active"></span>
                         <span class="dot"></span>
@@ -234,7 +118,6 @@
                 <h3>DR Detection</h3>
                 <p>Detect diabetic retinopathy early using our machine learning algorithm.</p>
             
-                <!-- DR Image Input -->
                 <input type="file" id="drImageInput" accept="image/*" hidden>
                 <button class="upload-btn" onclick="document.getElementById('drImageInput').click();">
                     <i class="fas fa-upload"></i> Upload Image
@@ -242,11 +125,9 @@
             
                 <div id="drPreviewContainer" class="preview-container"></div>
 
-                <!-- Patient Details Form -->
                 <div id="drpatientDetailsForm" class="patient-form">
                     <h3>Patient Details</h3>
                 
-                    <!-- Steps -->
                     <div class="form-step active">
                         <input type="text" id="drpatientName" placeholder="Enter PatientName" required>
                     </div>
@@ -267,14 +148,12 @@
                         <input type="text" id="drpatientNationality" placeholder="Enter patient nationality" required>
                     </div>
                 
-                    <!-- Navigation Buttons -->
                     <div class="form-navigation">
                         <button class="prev-btn" onclick="prevDrStep()" disabled>Previous</button>
                         <button class="next-btn" onclick="nextDrStep()">Next</button>
                         <button class="submit-btn" id="submitDrBtn" onclick="submitDrPrediction()" style="display: none;">Submit</button>
                     </div>
                 
-                    <!-- Progress Dots -->
                     <div class="progress-indicators">
                         <span class="dot active"></span>
                         <span class="dot"></span>
@@ -285,13 +164,12 @@
                 </div>
 
             
-                <!-- DR Prediction Submit Button -->
                 <button class="submit-btn" id="predictDrBtn" onclick="submitDrPrediction()">Submit for Prediction</button>
             
-                <!-- DR Prediction Result Section -->
+    
                 <div id="drPredictionResult"></div>
             
-                <!-- Download PDF for DR -->
+
                 <button class="upload-btn" onclick="downloadDrPDF()">Download Report as PDF</button>
             </div>        
         </div>
@@ -315,6 +193,60 @@
             <button><i class="fas fa-paper-plane"></i></button>
         </div>
 
+    </div>
+
+    <script src="./Scripts/Prediction.js"></script>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disease Detection Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    <link rel="stylesheet" href="./Styles/PredictionStyles.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="welcome-text">Hello, <span id="userName">User</span>!</div>
+        <div id="logoutPopup" class="popup">
+            <div class="popup-content">
+                <p>Are you sure you want to logout?</p>
+                <button id="logoutConfirmBtn">Yes, Logout</button>
+                <button onclick="closeLogoutPopup()">No</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="detection-card">
+            <i class="fas fa-diagnoses card-icon"></i>
+            <h3>Disease Detection</h3>
+            <p>Upload retinal images for Glaucoma and Diabetic Retinopathy detection.</p>
+            
+            <input type="file" id="imageInput" accept="image/*" multiple hidden>
+            <button class="upload-btn" onclick="document.getElementById('imageInput').click();">
+                <i class="fas fa-upload"></i> Upload Images
+            </button>
+            
+            <div id="previewContainer" class="preview-container"></div>
+
+            <!-- Patient Details Form -->
+            <div id="patientDetailsForm" class="patient-form">
+                <h3>Patient Details</h3>
+                <input type="text" id="patientName" placeholder="Enter Patient Name" required>
+                <input type="date" id="patientDOB" required>
+                <input type="text" id="patientPhone" placeholder="Enter Phone Number" required>
+                <input type="text" id="patientAddress" placeholder="Enter Address" required>
+            </div>
+            
+            <button class="submit-btn" id="predictBtn" onclick="submitPrediction()">Submit for Prediction</button>
+            <div id="predictionResult"></div>
+            <button class="upload-btn" onclick="downloadPDF()">Download Report as PDF</button>
+        </div>
     </div>
 
     <script src="./Scripts/Prediction.js"></script>
