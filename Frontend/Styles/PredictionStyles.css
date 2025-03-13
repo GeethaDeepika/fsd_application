@@ -203,6 +203,8 @@ body {
     background: rgba(0, 0, 0, 0.5);
     justify-content: center;
     align-items: center;
+    pointer-events: auto;
+    z-index: 9999;
 }
 .popup-content {
     background: white;
@@ -278,6 +280,7 @@ body {
     text-align: center;
     position: relative;
     transition: transform 0.3s ease-in-out;
+    z-index: 1000;
 }
 
 .form-title {
@@ -370,9 +373,18 @@ input {
     background: #005c8f;
 }
 
-/* Adds spacing between upload button and card */
 .detection-card {
     margin-top: 30px;
+    /* transition: transform 0.2s ease-in-out; */
+}
+
+
+.popup-active .detection-card:hover {
+    transform: none; 
+}
+
+.popup-active .patient-form {
+    pointer-events: none; 
 }
 
 

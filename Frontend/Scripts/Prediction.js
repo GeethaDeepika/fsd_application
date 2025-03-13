@@ -393,6 +393,7 @@
 //         console.error("Error generating DR PDF report:", error);
 //     });
 // }
+
 let uploadedFiles = [];
 let uploadedFileObjects = [];
 
@@ -406,14 +407,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const imageInput = document.getElementById("imageInput");
     const previewContainer = document.getElementById("previewContainer");
-    const logoutBtn = document.createElement("button");
-    logoutBtn.classList.add("logout-btn");
-    logoutBtn.textContent = "Logout";
-    logoutBtn.onclick = function(event) {
-        event.stopPropagation();
-        showLogoutPopup();
-    };
-    document.querySelector(".navbar").appendChild(logoutBtn);
 
     imageInput.addEventListener("change", function(event) {
         const files = Array.from(event.target.files);
@@ -451,21 +444,35 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
+document.getElementById("logoutConfirmBtn").addEventListener("click", confirmLogout);
+
+document.addEventListener("click", function (event) {
+    const logoutPopup = document.getElementById("logoutPopup");
+    if (logoutPopup.style.display === "flex" && !logoutPopup.contains(event.target) && !event.target.classList.contains("logout-btn")) {
+        closeLogoutPopup();
+    }
+});
+
+
 function showLogoutPopup(event) {
-    event?.stopPropagation();
+    event?.stopPropagation();  // Prevents click event from affecting other elements
     document.getElementById("logoutPopup").style.display = "flex";
+    document.body.classList.add("popup-active"); // Disable other interactions
 }
+
 
 function closeLogoutPopup(event) {
     event?.stopPropagation();
     document.getElementById("logoutPopup").style.display = "none";
+    document.body.classList.remove("popup-active"); // Re-enable interactions
 }
 
-function confirmLogout(event) {
-    event?.stopPropagation();
+
+// Confirm and perform logout
+function confirmLogout() {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    document.getElementById("logoutPopup").style.display = "none";
+    document.getElementById("logoutPopup").style.display = "none"; // Hide popup
     window.location.href = "login.html"; // Redirect to login page
 }
 

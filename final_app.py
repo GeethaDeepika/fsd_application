@@ -127,11 +127,11 @@ def generate_pdf():
 - **Address**: {patient_info.get('address', 'N/A')}
 
 ## **Test Results**
-| Image | Glaucoma Prediction | DR Prediction | DR Confidence |
-|---|---|---|---|
+| Image | Glaucoma Prediction | DR Prediction |
+|---|---|---|
 """
         for pred in predictions:
-            markdown_content += f"| {pred['filename']} | {pred['glaucoma_result']} | {pred['dr_result']} | {pred['dr_confidence']}% |"
+            markdown_content += f"| {pred['filename']} | {pred['glaucoma_result']} | {pred['dr_result']} | "
         markdown_content += "\n## **Doctor's Suggestions**\n"
         for pred in predictions:
             markdown_content += f"- **{pred['filename']}** → {pred['glaucoma_suggestion']} & {pred['dr_suggestion']}\n"

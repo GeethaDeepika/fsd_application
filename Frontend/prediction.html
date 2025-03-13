@@ -211,15 +211,17 @@
 <body>
 
     <nav class="navbar">
-        <div class="welcome-text">Hello, <span id="userName">User</span>!</div>
-        <div id="logoutPopup" class="popup">
-            <div class="popup-content">
-                <p>Are you sure you want to logout?</p>
-                <button id="logoutConfirmBtn">Yes, Logout</button>
-                <button onclick="closeLogoutPopup()">No</button>
-            </div>
-        </div>
+        <div class="welcome-text">Hello, <span id="userName">John</span>!</div>
+        <button class="logout-btn" onclick="showLogoutPopup()">Logout</button>
     </nav>
+
+    <div id="logoutPopup" class="popup">
+        <div class="popup-content">
+            <p>Are you sure you want to logout?</p>
+            <button id="logoutConfirmBtn">Yes, Logout</button>
+            <button onclick="closeLogoutPopup()">No</button>
+        </div>
+    </div>
 
     <div class="container">
         <div class="detection-card">
