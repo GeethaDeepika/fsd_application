@@ -251,6 +251,26 @@
         </div>
     </div>
 
+    <!-- Chat Icon -->
+    <div class="chatbot-toggle" onclick="toggleChat()">
+        <i class="fas fa-comments fa-lg"></i>
+    </div>
+
+    <!-- Chatbot Popup -->
+    <div class="chatbot-popup" id="chatPopup">
+        <div class="chatbot-header">
+            <h3>Medical Assistant</h3>
+            <i class="fas fa-times" style="cursor: pointer;" onclick="toggleChat()"></i>
+        </div>
+        <div class="chatbot-messages">
+            <p>How can I help you today?</p>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" placeholder="Type your message...">
+            <button><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
     <script src="./Scripts/Prediction.js"></script>
 </body>
 </html>

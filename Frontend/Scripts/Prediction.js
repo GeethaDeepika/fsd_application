@@ -453,6 +453,15 @@ document.addEventListener("click", function (event) {
     }
 });
 
+function toggleChat() {
+    var chatPopup = document.getElementById("chatPopup");
+    if (chatPopup.style.display === "none" || chatPopup.style.display === "") {
+        chatPopup.style.display = "block";
+    } else {
+        chatPopup.style.display = "none";
+    }
+}
+
 
 function showLogoutPopup(event) {
     event?.stopPropagation();  // Prevents click event from affecting other elements
@@ -550,3 +559,49 @@ function downloadPDF() {
     })
     .catch(error => console.error("Error generating PDF report:", error));
 }
+
+
+// Chatbot Integration
+document.addEventListener("DOMContentLoaded", function () {
+    const chatInput = document.querySelector(".chatbot-input input");
+    const sendButton = document.querySelector(".chatbot-input button");
+    const chatMessages = document.querySelector(".chatbot-messages");
+
+    sendButton.addEventListener("click", sendMessage);
+    chatInput.addEventListener("keypress", function (event) {
+        if (event.key === "Enter") sendMessage();
+    });
+
+    function sendMessage() {
+        const userMessage = chatInput.value.trim();
+        if (userMessage === "") return;
+
+        // Display user message in chat
+        displayMessage("You", userMessage);
+        chatInput.value = "";
+
+        // Send message to chatbot API
+        fetch("http://127.0.0.1:5003/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message: userMessage })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.response) {
+                displayMessage("Bot", data.response);
+            } else {
+                displayMessage("Bot", "Sorry, I couldn't understand your question.");
+            }
+        })
+        .catch(() => displayMessage("Bot", "Error connecting to the chatbot server."));
+    }
+
+    function displayMessage(sender, message) {
+        const messageElement = document.createElement("div");
+        messageElement.classList.add("message");
+        messageElement.innerHTML = `<strong>${sender}:</strong> ${message}`;
+        chatMessages.appendChild(messageElement);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+});
