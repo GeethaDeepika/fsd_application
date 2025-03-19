@@ -1,2 +1,2 @@
-# fsd_application
+# Glaucoma and DR detection application
  
