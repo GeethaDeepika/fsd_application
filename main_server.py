@@ -20,17 +20,17 @@ def start_process(command, log_file):
         return subprocess.Popen(command, stdout=log, stderr=log, shell=True, preexec_fn=os.setsid)
 
 # Start Backend (Node.js)
-print("🚀 Starting Backend Server...")
+print("Starting Backend Server...")
 backend_process = start_process(f"node {BACKEND_SCRIPT}", "backend.log")
 time.sleep(5)  # Give it time to initialize
 
 # Start Model Server (Flask)
-print("🚀 Starting Model Server...")
+print("Starting Model Server...")
 model_process = start_process(f"python3 {MODEL_SCRIPT}", "model_server.log")
 time.sleep(5)
 
 # Start Chatbot Server (Flask)
-print("🚀 Starting Chatbot Server...")
+print("Starting Chatbot Server...")
 chatbot_process = start_process(f"python3 {CHATBOT_SCRIPT}", "chatbot.log")
 
 # Keep running
@@ -38,8 +38,8 @@ try:
     while True:
         time.sleep(1)
 except KeyboardInterrupt:
-    print("\n🛑 Shutting down servers...")
+    print("\n Shutting down servers...")
     os.killpg(os.getpgid(backend_process.pid), signal.SIGTERM)
     os.killpg(os.getpgid(model_process.pid), signal.SIGTERM)
     os.killpg(os.getpgid(chatbot_process.pid), signal.SIGTERM)
-    print("✅ All servers stopped.")
+    print(" All servers stopped.")
