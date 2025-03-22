@@ -561,11 +561,79 @@ function downloadPDF() {
 }
 
 
-// Chatbot Integration
+// // Chatbot Integration
+// document.addEventListener("DOMContentLoaded", function () {
+//     const chatInput = document.querySelector(".chatbot-input input");
+//     const sendButton = document.querySelector(".chatbot-input button");
+//     // const chatMessages = document.querySelector(".chatbot-messages");
+
+//     sendButton.addEventListener("click", sendMessage);
+//     chatInput.addEventListener("keypress", function (event) {
+//         if (event.key === "Enter") sendMessage();
+//     });
+
+//     function sendMessage() {
+//         const userMessage = chatInput.value.trim();
+//         if (userMessage === "") return;
+
+//         // Display user message in chat
+//         displayMessage("You", userMessage);
+//         chatInput.value = "";
+
+//         // Send message to chatbot API
+//         fetch("http://127.0.0.1:5003/chat", {
+//             method: "POST",
+//             headers: { "Content-Type": "application/json" },
+//             body: JSON.stringify({ message: userMessage })
+//         })
+//         .then(response => response.json())
+//         .then(data => {
+//             if (data.response) {
+//                 displayMessage("Bot", data.response);
+//             } else {
+//                 displayMessage("Bot", "Sorry, I couldn't understand your question.");
+//             }
+//         })
+//         .catch(() => displayMessage("Bot", "Error connecting to the chatbot server."));
+//     }
+
+//     function displayMessage(sender, message) {
+//         const messageElement = document.createElement("div");
+//         messageElement.classList.add("message");
+//         messageElement.innerHTML = `<strong>${sender}:</strong> ${message}`;
+//         chatMessages.appendChild(messageElement);
+//         chatMessages.scrollTop = chatMessages.scrollHeight;
+//     }
+// });
+
+// function appendMessage(text, sender) {
+//     const msgContainer = document.getElementById('chatMessages');
+//     const message = document.createElement('div');
+//     message.classList.add('message', sender);
+//     message.textContent = text;
+//     msgContainer.appendChild(message);
+//     msgContainer.scrollTop = msgContainer.scrollHeight; // Auto-scroll to latest message
+// }
+
+// // Example usage:
+// document.querySelector('.chatbot-input button').addEventListener('click', () => {
+//     const inputField = document.querySelector('.chatbot-input input');
+//     const userText = inputField.value.trim();
+//     if (!userText) return;
+
+//     appendMessage(userText, 'user');
+//     inputField.value = '';
+
+//     // Simulate bot response
+//     setTimeout(() => {
+//         appendMessage("Thanks for your message! We'll get back shortly.", 'bot');
+//     }, 1000);
+// });
+
 document.addEventListener("DOMContentLoaded", function () {
     const chatInput = document.querySelector(".chatbot-input input");
     const sendButton = document.querySelector(".chatbot-input button");
-    const chatMessages = document.querySelector(".chatbot-messages");
+    const chatMessages = document.getElementById("chatMessages");
 
     sendButton.addEventListener("click", sendMessage);
     chatInput.addEventListener("keypress", function (event) {
@@ -576,11 +644,11 @@ document.addEventListener("DOMContentLoaded", function () {
         const userMessage = chatInput.value.trim();
         if (userMessage === "") return;
 
-        // Display user message in chat
-        displayMessage("You", userMessage);
+        // Display user message
+        appendMessage(userMessage, "user");
         chatInput.value = "";
 
-        // Send message to chatbot API
+        // Call the backend API
         fetch("http://127.0.0.1:5003/chat", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -589,19 +657,19 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(response => response.json())
         .then(data => {
             if (data.response) {
-                displayMessage("Bot", data.response);
+                appendMessage(data.response, "bot");
             } else {
-                displayMessage("Bot", "Sorry, I couldn't understand your question.");
+                appendMessage("Sorry, I couldn't understand your question.", "bot");
             }
         })
-        .catch(() => displayMessage("Bot", "Error connecting to the chatbot server."));
+        .catch(() => appendMessage("Error connecting to the chatbot server.", "bot"));
     }
 
-    function displayMessage(sender, message) {
-        const messageElement = document.createElement("div");
-        messageElement.classList.add("message");
-        messageElement.innerHTML = `<strong>${sender}:</strong> ${message}`;
-        chatMessages.appendChild(messageElement);
+    function appendMessage(text, sender) {
+        const message = document.createElement("div");
+        message.classList.add("message", sender);
+        message.textContent = text;
+        chatMessages.appendChild(message);
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 });

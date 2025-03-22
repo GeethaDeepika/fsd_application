@@ -176,6 +176,42 @@ body {
     cursor: pointer;
     border-radius: 5px;
 }
+/* Common message style */
+.message {
+    max-width: 70%;
+    padding: 10px 15px;
+    border-radius: 20px;
+    margin: 5px 0;
+    word-wrap: break-word;
+    font-size: 0.95rem;
+}
+
+/* User message */
+.message.user {
+    background-color: #d1f1ff;
+    color: #000;
+    align-self: flex-end;
+    border-bottom-right-radius: 0;
+    text-align: right;
+}
+
+/* Bot message */
+.message.bot {
+    background-color: #f1f1f1;
+    color: #000;
+    align-self: flex-start;
+    border-bottom-left-radius: 0;
+    text-align: left;
+}
+
+/* Chat container styles */
+.chatbot-messages {
+    display: flex;
+    flex-direction: column;
+    height: 380px;
+    padding: 1rem;
+    overflow-y: auto;
+}
 
 .popup {
     display: none;
