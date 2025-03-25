@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family:  sans-serif;
 }
 
 body {
@@ -406,6 +406,39 @@ input, select {
 .popup-active .patient-form {
     pointer-events: none; 
 }
+
+    .prediction-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        font-family: Arial, sans-serif;
+    }
+
+    .prediction-table th,
+    .prediction-table td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .prediction-table th {
+        background-color: #00769d;
+        color: white;
+    }
+
+    .prediction-table tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .prediction-table tr:hover {
+        background-color: #ddd;
+    }
+
+    h3{
+        padding-top: 10px;
+    }
+
+
 
 
 @media (max-width: 768px) {

@@ -161,6 +161,7 @@
   background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
   padding: 8rem 0;
   position: relative;
+  z-index: 1;
 }
 
 .feature-card {
@@ -172,6 +173,7 @@
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  height: 100%;
 }
 
 .feature-card::before {
@@ -206,6 +208,51 @@
   color: var(--accent-color);
 }
 
+.dev-img {
+  width: 110px;
+  height: 110px;
+  object-fit: cover;
+  border: 2px solid #dee2e6;
+  padding: 3px;
+  transition: transform 0.3s ease;
+}
+
+.dev-img:hover {
+  transform: scale(1.05);
+}
+
+.about-section h2 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+.about-section a {
+  text-decoration: none !important;
+}
+
+.about-section a:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+
+/* Icon hover effect */
+.about-section a i {
+  transition: color 0.2s ease;
+  text-decoration: none;
+}
+
+.about-section a:hover i {
+  transform: scale(1.02);
+}
+
+/* Lift cards slightly into the previous section visually */
+.about-section .container {
+  margin-top: -40px;
+}
+
+
 /* Scroll Indicator */
 .scroll-indicator {
   position: absolute;
@@ -239,104 +286,41 @@
 }
 
 /* Glaucoma Section Styling */
+
 .glaucoma-section {
-  padding: 6rem 0;
   background-color: #f8f9fa;
 }
 
-/* Glaucoma Cards */
 .glaucoma-card {
-  background: white;
-  border-radius: 15px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-  padding: 2rem;
-  text-align: center;
-  transition: transform 0.3s ease-in-out;
-  height: 100%; /* Ensures equal height for all cards */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  background-color: #ffffff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .glaucoma-card:hover {
   transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
 }
 
-/* Glaucoma Section Header */
-.glaucoma-section h2 {
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: var(--primary-color);
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-/* Glaucoma Icon */
-.glaucoma-icon {
-  font-size: 3rem;
-  color: var(--primary-color);
-  display: block;
-  margin-bottom: 1rem;
-}
-
-/* Glaucoma Info Blocks */
-.info-block ul {
-  padding-left: 0;
-  list-style: none;
-}
-
-.info-block ul li {
-  font-size: 1.1rem;
-  margin-bottom: 0.5rem;
-}
-
-.info-block ul li i {
-  color: var(--primary-color);
-  margin-right: 8px;
-}
-
-/* "Did You Know?" Section */
 .did-you-know {
-  background: linear-gradient(135deg, #4834d4, #686de0);
-  color: white;
-  padding: 3rem;
-  border-radius: 15px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-  text-align: center;
-  margin-top: 3rem;
-}
-
-.did-you-know h3 {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
-}
-
-.did-you-know ul {
-  list-style: none;
-  padding: 0;
+  border-left: 5px solid var(--primary-color, #0d6efd);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
 }
 
 .did-you-know ul li {
-  font-size: 1.2rem;
-  margin-bottom: 0.8rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  margin-bottom: 0.6rem;
 }
 
-.did-you-know ul li i {
-  margin-right: 10px;
-  font-size: 1.5rem;
-  color: #ffdd57;
+.styled-card {
+  border-left: 5px solid #5a57ff;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Buttons */
-.glaucoma-btn {
-  margin-top: 1rem;
-  font-size: 1.1rem;
-  padding: 0.8rem 2rem;
+.styled-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
 }
+
 /* DR Cards - Uniform Size */
 .dr-card {
   background: white;
@@ -353,10 +337,10 @@
 }
 
 /* Card Title Styling */
+
 .dr-card h3 {
   font-size: 1.5rem;
   font-weight: bold;
-  color: var(--primary-color);
 }
 
 /* List Styling */
@@ -414,6 +398,54 @@
   flex-direction: column;
   justify-content: center;
 }
+
+.about-section i {
+  display: block;
+}
+
+.about-section h5 {
+  margin-top: 10px;
+}
+
+.contact-section {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  scroll-margin-top: 100px;
+  padding: 2rem 1rem 4rem 1rem; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0px; 
+}
+
+/* Inputs */
+.contact-inputs {
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+}
+
+.contact-inputs:focus {
+  outline: none;
+  border-color: #0d6efd;
+  box-shadow: 0 0 5px rgba(13, 110, 253, 0.15);
+}
+
+/* Gradient Button */
+.btn-gradient {
+  background: linear-gradient(to right, #4facfe, #02e6ff); 
+  border: none;
+  color: black;
+  transition: 0.3s ease-in-out;
+  border-radius: 8px;
+}
+
+.btn-gradient:hover {
+  opacity: 0.95;
+  transform: scale(1.03);
+}
+
 
 @keyframes float {
   0% { transform: translateY(0) rotate(0deg); }

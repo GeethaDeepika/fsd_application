@@ -1,25 +1,36 @@
 document.addEventListener("DOMContentLoaded", function () {
+
     // Handle Signup Form
-    const signupForm = document.querySelector("#signupForm"); // Use the ID of your signup form
+    const signupForm = document.querySelector("#signupForm");
 
     if (signupForm) {
+        const messageBox = document.getElementById("messageBox");
+    
         signupForm.addEventListener("submit", function (event) {
-            event.preventDefault(); // Prevent default form submission
-
+            event.preventDefault(); // Prevent page reload
+    
+            // Get form field values
             const email = signupForm.elements["email"].value;
             const password = signupForm.elements["password"].value;
-            const confirmPassword = signupForm.elements["retype_password"].value; // Corrected name
+            const confirmPassword = signupForm.elements["retype_password"].value;
             const firstName = signupForm.elements["firstName"].value;
             const lastName = signupForm.elements["lastName"].value;
-
+    
+            // Clear previous messages
+            messageBox.textContent = "";
+            messageBox.style.color = "white";
+    
+            // Password mismatch check
             if (password !== confirmPassword) {
-                alert("Passwords do not match!");
+                messageBox.textContent = "Passwords do not match!";
+                messageBox.style.color = "#ffcccc";
                 return;
             }
-
-            // Send data to the backend
+    
+            // Prepare data to send
             const formData = { email, password, firstName, lastName };
-
+    
+            // Send data to backend
             fetch("http://localhost:5001/api/auth/signup", {
                 method: "POST",
                 headers: {
@@ -27,30 +38,41 @@ document.addEventListener("DOMContentLoaded", function () {
                 },
                 body: JSON.stringify(formData),
             })
-                .then((response) => response.json())
-                .then((data) => {
-                    alert(data.message);
-                    if (data.message === "User registered successfully") {
-                        window.location.href = "login.html"; // Redirect on success
-                    }
-                })
-                .catch((error) => console.error("Error:", error));
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.message === "User registered successfully") {
+                    messageBox.textContent = "Registration successful! Redirecting to login...";
+                    messageBox.style.color = "#90ee90"; // Light green
+                    setTimeout(() => {
+                        window.location.href = "login.html";
+                    }, 2000);
+                } else {
+                    messageBox.textContent = `${data.message}`;
+                    messageBox.style.color = "#ffcccc";
+                }
+            })
+            .catch((error) => {
+                console.error("Signup error:", error);
+                messageBox.textContent = "fServer error. Please try again.";
+                messageBox.style.color = "#ffcccc";
+            });
         });
     }
+    
+    
 
     // Handle Login Form
-    const loginForm = document.querySelector("#loginForm"); // Use the ID of your login form
+    const loginForm = document.querySelector("#loginForm"); 
 
     if (loginForm) {
         loginForm.addEventListener("submit", function (event) {
-            event.preventDefault(); // Prevent default form submission
+            event.preventDefault(); 
 
             const email = loginForm.elements["email"].value;
             const password = loginForm.elements["password"].value;
 
             const loginData = { email, password };
 
-            // Send data to backend login route
             fetch("http://localhost:5001/api/auth/login", {
                 method: "POST",
                 headers: {
@@ -61,11 +83,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 .then((response) => response.json())
                 .then((data) => {
                     if (data.token) {
-                        // Store the JWT token in localStorage
                         localStorage.setItem("token", data.token);
-
                         alert("Login successful");
-                        window.location.href = "/Frontend/prediction.html"; // Redirect after successful login
+                        window.location.href = "/Frontend/prediction.html"; 
                     } else {
                         alert(data.message || "Login failed");
                     }
@@ -100,7 +120,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     document.getElementById("messageBox").textContent = data.message;
                     if (data.success) {
                         setTimeout(() => {
-                            window.location.href = "verify-reset-code.html"; // Redirect to reset code verification page
+                            window.location.href = "verify-reset-code.html"; 
                         }, 2000);
                     }
                 })
@@ -115,6 +135,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const verifyResetCodeForm = document.querySelector("#verify-reset-code-form");
 
     if (verifyResetCodeForm) {
+        const messageBox = document.getElementById("messageBox");
 
         const storedEmail = localStorage.getItem("resetEmail");
         if (storedEmail) {
@@ -141,18 +162,21 @@ document.addEventListener("DOMContentLoaded", function () {
                 .then((response) => response.json())
                 .then((data) => {
                     if (data.success) {
-                        alert("Code verified successfully! Redirecting to reset password...");
+                        messageBox.textContent = "Code verified successfully! Redirecting...";
+                        messageBox.style.color = "#90ee90"; // Light green
                         // sessionStorage.setItem("email", email);
                         // sessionStorage.setItem("resetCode", code);
                         localStorage.setItem("resetCode", code);
                         window.location.href = "reset-password.html"; // Redirect on success
                     } else {
-                        alert(data.message || "Invalid code.");
+                        messageBox.textContent = data.message || "Invalid code.";
+                        messageBox.style.color = "#ffcccc"; // Light red
                     }
                 })
                 .catch((error) => {
                     console.error("Verification error:", error);
-                    alert("Server error. Please try again later.");
+                    messageBox.textContent = "Server error. Please try again later.";
+                    messageBox.style.color = "#ffcccc";
                 });
         });
     }
@@ -160,6 +184,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const resetPasswordForm = document.querySelector("#resetPasswordForm");
     if (resetPasswordForm) {
+        const messageBox = document.getElementById("messageBox");
+
         // const email = sessionStorage.getItem("email");
         // const resetCode = sessionStorage.getItem("resetCode");
 
@@ -175,7 +201,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (storedEmail && storedResetCode) {
             document.querySelector("#email").value = storedEmail;
         } else {
-            alert("Invalid session. Please restart the password reset process.");
+            messageBox.textContent = "Invalid session. Please restart the password reset process";
             window.location.href = "forgot.html"; // Redirect back
         }
 
@@ -186,7 +212,8 @@ document.addEventListener("DOMContentLoaded", function () {
             const confirmPassword = document.querySelector("#confirmPassword").value;
 
             if (newPassword !== confirmPassword) {
-                alert("Passwords do not match!");
+                messageBox.textContent = "Passwords donot match. Please try again";
+                messageBox.style.color = "#ffcccc";
                 return;
             }
 
@@ -200,7 +227,7 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .then((response) => response.json())
             .then((data) => {
-                alert(data.message);
+                messageBox.textContent = data.message;
                 if (data.message === "Password reset successfully!") {
                     // sessionStorage.removeItem("email");
                     // sessionStorage.removeItem("resetCode");

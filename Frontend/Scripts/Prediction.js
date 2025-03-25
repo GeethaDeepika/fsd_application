@@ -399,11 +399,23 @@ let uploadedFileObjects = [];
 
 document.addEventListener("DOMContentLoaded", function() {
     const user = JSON.parse(localStorage.getItem("user"));
+
     if (user) {
-        document.getElementById("userName").textContent = user.firstName || "User";
+        let displayName = "";
+    
+        if (user.firstName) {
+            displayName = user.firstName;
+        } else if (user.displayName) {
+            displayName = user.displayName.split(" ")[0]; // Use first part of full name
+        } else {
+            displayName = "User";
+        }
+    
+        document.getElementById("userName").textContent = displayName;
     } else {
         window.location.href = "login.html"; // Redirect to login if not authenticated
     }
+    
 
     const imageInput = document.getElementById("imageInput");
     const previewContainer = document.getElementById("previewContainer");
@@ -464,27 +476,24 @@ function toggleChat() {
 
 
 function showLogoutPopup(event) {
-    event?.stopPropagation();  // Prevents click event from affecting other elements
+    event?.stopPropagation();  
     document.getElementById("logoutPopup").style.display = "flex";
-    document.body.classList.add("popup-active"); // Disable other interactions
+    document.body.classList.add("popup-active"); 
 }
 
 
 function closeLogoutPopup(event) {
     event?.stopPropagation();
     document.getElementById("logoutPopup").style.display = "none";
-    document.body.classList.remove("popup-active"); // Re-enable interactions
+    document.body.classList.remove("popup-active"); 
 }
 
-
-// Confirm and perform logout
 function confirmLogout() {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    document.getElementById("logoutPopup").style.display = "none"; // Hide popup
-    window.location.href = "login.html"; // Redirect to login page
+    document.getElementById("logoutPopup").style.display = "none"; 
+    window.location.href = "login.html"; 
 }
-
 function submitPrediction() {
     if (uploadedFileObjects.length === 0) {
         alert("Please select at least one image for prediction.");
@@ -510,16 +519,35 @@ function submitPrediction() {
     .then(response => response.json())
     .then(data => {
         const predictionResult = document.getElementById("predictionResult");
-        let reportHTML = `<h3>Diagnosis Report</h3>`;
+        
+        let reportHTML = `
+            <h3>Diagnosis Report</h3>
+            <table class="prediction-table">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Glaucoma Result</th>
+                        <th>DR Result</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
         data.predictions.forEach(pred => {
             reportHTML += `
-                <p><strong>Image:</strong> ${pred.filename}</p>
-                <p><strong>Glaucoma Result:</strong> ${pred.glaucoma_result}</p>
-                <p><strong>DR Result:</strong> ${pred.dr_result} (${pred.dr_confidence}%)</p>
-                <p><strong>Suggestion:</strong> ${pred.glaucoma_suggestion} & ${pred.dr_suggestion}</p>
-                <hr>
+                <tr>
+                    <td>${pred.filename}</td>
+                    <td>${pred.glaucoma_result}</td>
+                    <td>${pred.dr_result}</td>
+                </tr>
             `;
         });
+
+        reportHTML += `
+                </tbody>
+            </table>
+        `;
+
         predictionResult.innerHTML = reportHTML;
     })
     .catch(error => console.error("Error during prediction:", error));
@@ -529,17 +557,35 @@ function downloadPDF() {
     const patientInfo = {
         name: document.getElementById("patientName").value || "Unknown",
         dob: document.getElementById("patientDOB").value || "N/A",
+        gender: document.getElementById("patientGender").value || "N/A",
+        blood_group: document.getElementById("patientBloodGroup").value || "N/A",
         phone: document.getElementById("patientPhone").value || "N/A",
-        address: document.getElementById("patientAddress").value || "N/A"
+        address: document.getElementById("patientAddress").value || "N/A",
+        emergency_contact: document.getElementById("emergencyContact").value || "N/A",
+        emergency_phone: document.getElementById("emergencyPhone").value || "N/A",
+        medical_history: document.getElementById("medicalHistory").value || "N/A",
+        insurance: document.getElementById("patientInsurance").value || "N/A"
     };
 
     const predictions = [];
-    document.querySelectorAll("#predictionResult hr").forEach((_, index) => {
-        const filename = document.querySelectorAll("#predictionResult strong")[index * 4].nextSibling.nodeValue.trim();
-        const glaucomaResult = document.querySelectorAll("#predictionResult strong")[index * 4 + 1].nextSibling.nodeValue.trim();
-        const drResult = document.querySelectorAll("#predictionResult strong")[index * 4 + 2].nextSibling.nodeValue.trim();
-        const suggestion = document.querySelectorAll("#predictionResult strong")[index * 4 + 3].nextSibling.nodeValue.trim();
-        predictions.push({ filename, glaucoma_result: glaucomaResult, dr_result: drResult, dr_confidence: "N/A", glaucoma_suggestion: suggestion, dr_suggestion: suggestion });
+    const cards = document.querySelectorAll(".prediction-card");
+
+    cards.forEach(card => {
+        const image = card.querySelector("p:nth-child(1)").textContent.replace("Image:", "").trim();
+        const glaucomaResult = card.querySelector("p:nth-child(2)").textContent.replace("Glaucoma Result:", "").trim();
+        const drResultRaw = card.querySelector("p:nth-child(3)").textContent.replace("DR Result:", "").trim();
+        const drResult = drResultRaw.split("(")[0].trim();
+        const suggestion = card.querySelector("p:nth-child(4)").textContent.replace("Suggestion:", "").trim();
+        const [glaucomaSuggestion, drSuggestion] = suggestion.split("&").map(s => s.trim());
+
+        predictions.push({
+            filename: image,
+            glaucoma_result: glaucomaResult,
+            dr_result: drResult,
+            dr_confidence: "N/A", 
+            glaucoma_suggestion: glaucomaSuggestion,
+            dr_suggestion: drSuggestion
+        });
     });
 
     fetch("http://localhost:5002/generate_pdf", {
@@ -559,76 +605,6 @@ function downloadPDF() {
     })
     .catch(error => console.error("Error generating PDF report:", error));
 }
-
-
-// // Chatbot Integration
-// document.addEventListener("DOMContentLoaded", function () {
-//     const chatInput = document.querySelector(".chatbot-input input");
-//     const sendButton = document.querySelector(".chatbot-input button");
-//     // const chatMessages = document.querySelector(".chatbot-messages");
-
-//     sendButton.addEventListener("click", sendMessage);
-//     chatInput.addEventListener("keypress", function (event) {
-//         if (event.key === "Enter") sendMessage();
-//     });
-
-//     function sendMessage() {
-//         const userMessage = chatInput.value.trim();
-//         if (userMessage === "") return;
-
-//         // Display user message in chat
-//         displayMessage("You", userMessage);
-//         chatInput.value = "";
-
-//         // Send message to chatbot API
-//         fetch("http://127.0.0.1:5003/chat", {
-//             method: "POST",
-//             headers: { "Content-Type": "application/json" },
-//             body: JSON.stringify({ message: userMessage })
-//         })
-//         .then(response => response.json())
-//         .then(data => {
-//             if (data.response) {
-//                 displayMessage("Bot", data.response);
-//             } else {
-//                 displayMessage("Bot", "Sorry, I couldn't understand your question.");
-//             }
-//         })
-//         .catch(() => displayMessage("Bot", "Error connecting to the chatbot server."));
-//     }
-
-//     function displayMessage(sender, message) {
-//         const messageElement = document.createElement("div");
-//         messageElement.classList.add("message");
-//         messageElement.innerHTML = `<strong>${sender}:</strong> ${message}`;
-//         chatMessages.appendChild(messageElement);
-//         chatMessages.scrollTop = chatMessages.scrollHeight;
-//     }
-// });
-
-// function appendMessage(text, sender) {
-//     const msgContainer = document.getElementById('chatMessages');
-//     const message = document.createElement('div');
-//     message.classList.add('message', sender);
-//     message.textContent = text;
-//     msgContainer.appendChild(message);
-//     msgContainer.scrollTop = msgContainer.scrollHeight; // Auto-scroll to latest message
-// }
-
-// // Example usage:
-// document.querySelector('.chatbot-input button').addEventListener('click', () => {
-//     const inputField = document.querySelector('.chatbot-input input');
-//     const userText = inputField.value.trim();
-//     if (!userText) return;
-
-//     appendMessage(userText, 'user');
-//     inputField.value = '';
-
-//     // Simulate bot response
-//     setTimeout(() => {
-//         appendMessage("Thanks for your message! We'll get back shortly.", 'bot');
-//     }, 1000);
-// });
 
 document.addEventListener("DOMContentLoaded", function () {
     const chatInput = document.querySelector(".chatbot-input input");

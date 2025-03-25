@@ -1,6 +1,5 @@
 import os
 import subprocess
-import datetime
 import torch
 import torch.nn.functional as F
 import pypandoc
@@ -8,7 +7,6 @@ from flask import Flask, request, jsonify, send_file
 from torchvision import transforms
 from PIL import Image
 from flask_cors import CORS
-from pypdf import PdfReader, PdfWriter
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -50,11 +48,11 @@ transform = transforms.Compose([
 # DR Class Labels & Treatment Suggestions
 CLASS_LABELS = {0: "Mild", 1: "Moderate", 2: "No_DR", 3: "Proliferate_DR", 4: "Severe"}
 SUGGESTIONS = {
-    "No_DR": "✅ No signs of diabetic retinopathy detected.",
-    "Mild": "⚠️ Mild signs of DR detected.",
-    "Moderate": "⚠️ Moderate DR detected. Consult an ophthalmologist.",
-    "Severe": "❗ Severe DR detected. Immediate consultation needed.",
-    "Proliferate_DR": "🚨 Advanced DR detected. Urgent medical attention required!"
+    "No_DR": " No signs of diabetic retinopathy detected.",
+    "Mild": " Mild signs of DR detected.",
+    "Moderate": " Moderate DR detected. Consult an ophthalmologist.",
+    "Severe": " Severe DR detected. Immediate consultation needed.",
+    "Proliferate_DR": " Advanced DR detected. Urgent medical attention required!"
 }
 
 # Prediction Function
@@ -64,7 +62,7 @@ def predict_glaucoma(image):
         with torch.no_grad():
             output = glaucoma_model(image)
         result = "Negative" if output[0][0].item() > 1 else "Positive"
-        suggestion = "⚠️ Glaucoma detected. Seek medical consultation." if result == "Positive" else "✅ No signs detected."
+        suggestion = " Glaucoma detected. Seek medical consultation." if result == "Positive" else " No signs of glaucoma detected "
         return result, suggestion
     except Exception as e:
         return "Error", f"Error processing image: {str(e)}"
@@ -122,24 +120,33 @@ def generate_pdf():
 ## **Patient Details**
 - **Name**: {patient_info.get('name', 'Unknown')}
 - **DOB**: {patient_info.get('dob', 'N/A')}
-- **Age**: {patient_info.get('age', 'N/A')}
+- **Gender**: {patient_info.get('gender', 'N/A')}
+- **Blood Group**: {patient_info.get('blood_group', 'N/A')}
 - **Phone**: {patient_info.get('phone', 'N/A')}
 - **Address**: {patient_info.get('address', 'N/A')}
+- **Emergency Contact Name**: {patient_info.get('emergency_contact', 'N/A')}
+- **Emergency Contact Phone**: {patient_info.get('emergency_phone', 'N/A')}
+- **Medical History**: {patient_info.get('medical_history', 'N/A')}
+- **Insurance Provider**: {patient_info.get('insurance', 'N/A')}
 
 ## **Test Results**
-| Image | Glaucoma Prediction | DR Prediction |
+| Image | Glaucoma Result | DR Result |
 |---|---|---|
 """
+
         for pred in predictions:
-            markdown_content += f"| {pred['filename']} | {pred['glaucoma_result']} | {pred['dr_result']} | "
+            markdown_content += f"| {pred['filename']} | {pred['glaucoma_result']} | {pred['dr_result']} |\n"
+
         markdown_content += "\n## **Doctor's Suggestions**\n"
         for pred in predictions:
-            markdown_content += f"- **{pred['filename']}** → {pred['glaucoma_suggestion']} & {pred['dr_suggestion']}\n"
+            markdown_content += f"- **{pred['filename']}** → {pred['glaucoma_suggestion']} and {pred['dr_suggestion']}\n"
 
+        # Write markdown to file
         markdown_file = "report.md"
         with open(markdown_file, "w", encoding="utf-8") as f:
             f.write(markdown_content)
 
+        # Convert to DOCX, then PDF
         output_docx = "report.docx"
         pypandoc.convert_file(markdown_file, 'docx', outputfile=output_docx)
         subprocess.run(["soffice", "--headless", "--convert-to", "pdf", output_docx], check=True)
