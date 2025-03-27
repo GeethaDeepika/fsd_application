@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -93,4 +93,137 @@
 
     <script src="./Scripts/Prediction.js"></script>
 </body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Disease Detection Portal</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
+  <link rel="stylesheet" href="./Styles/PredictionStyles.css">
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div>
+      <div class="logo-section">
+        <div class="portal-name">AI Detect</div>
+        <div class="caption">Redefining Patient Diagnosis</div>
+      </div>
+      <ul class="sidebar-menu">
+        <li id="predictionMenu" class="active" onclick="showPrediction()">
+          <i class="fas fa-microscope"></i> Prediction
+        </li>
+        <li id="chatbotMenu" onclick="showChatbot()">
+          <i class="fas fa-robot"></i> Chatbot
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Header -->
+<!-- Header -->
+<div class="header">
+  <div class="portal-title">Disease Detection Portal</div>
+
+  <div class="user-profile-wrapper">
+    <div class="user-profile" id="userProfile">
+      <div class="profile-circle" id="profileInitial">G</div>
+      <span id="profileName">Geetha Deepika</span>
+      <i class="fas fa-caret-down"></i>
+    </div>
+    <div class="dropdown" id="profileDropdown">
+      <button onclick="showLogoutPopup()">Logout</button>
+    </div>
+  </div>
+</div>
+
+<div id="logoutPopup" class="popup">
+  <div class="popup-content">
+    <p>Are you sure you want to logout?</p>
+    <div class="popup-buttons">
+      <button id="logoutConfirmBtn">Yes, Logout</button>
+      <button onclick="closeLogoutPopup()">No</button>
+    </div>
+  </div>
+</div>
+
+<!-- Prediction Section -->
+<div id="predictionSection">
+<div class="container">
+  <div class="detection-card">
+      <i class="fas fa-diagnoses card-icon"></i>
+      <h3>Disease Detection</h3>
+      <p>Upload retinal images for Glaucoma and Diabetic Retinopathy detection.</p>
+      
+      <input type="file" id="imageInput" accept="image/*" multiple hidden>
+
+      <button class="upload-btn" onclick="document.getElementById('imageInput').click();">
+          <i class="fas fa-upload"></i> Upload Images
+      </button>
+      
+      <div id="previewContainer" class="preview-container"></div>
+
+      <div id="patientDetailsForm" class="patient-form">
+          <h3>Patient Details</h3>
+          <input type="text" id="patientName" placeholder="Enter Patient Name" required>
+          <input type="date" id="patientDOB" required>
+          <select id="patientGender" required>
+              <option value="">Select Patient Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+          </select>
+          <select id="patientBloodGroup" required>
+              <option value="">Select Patient Blood Group</option>
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="O+">O+</option>
+              <option value="O-">O-</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option>
+          </select>
+          <input type="number" id="patientPhone" placeholder="Enter Patient Phone Number" required>
+          <input type="text" id="patientAddress" placeholder="Enter Address" required>
+          <input type="text" id="emergencyContact" placeholder="Enter Emergency Contact Name" required>
+          <input type="text" id="emergencyPhone" placeholder="Enter Emergency Contact Phone Number" required>
+          <input type="text" id="medicalHistory" placeholder="Enter the medical history of patient" required>
+          <input type="text" id="patientInsurance" placeholder="Enter Insurance Provider (if any)">
+
+      </div>
+      
+      <button class="submit-btn" id="predictBtn" onclick="submitPrediction()">Submit for Prediction</button>
+      <div id="predictionResult"></div>
+      <button class="upload-btn" onclick="downloadPDF()">Download Report as PDF</button>
+  </div>
+</div>
+</div>
+
+
+
+
+
+  <!-- Chatbot -->
+  <div class="chatbot-panel" id="chatPanel">
+    <div class="chat-header">
+      Medical Assistant
+      <i class="fas fa-times" onclick="hideChatbot()" style="cursor:pointer;"></i>
+    </div>
+    <div class="chat-body" id="chatMessages">
+      <div class="message bot">Hi! How can I assist you today?</div>
+    </div>
+    <div class="chat-input">
+      <input type="text" placeholder="Type your message..." />
+      <button><i class="fas fa-paper-plane"></i></button>
+    </div>
+  </div>
+
+  <script src="./Scripts/Prediction.js"></script>
+</body>
 </html>
+
