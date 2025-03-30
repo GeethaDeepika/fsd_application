@@ -8,6 +8,9 @@ body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
     background-color: #f4f7fc;
+    padding: 0;
+    overflow-x: hidden;
+    height: 100%;
   }
   
   /* Sidebar */
@@ -69,7 +72,6 @@ body {
     padding-left: 26px;
   }
   
-  /* Header */
   .header {
     position: fixed;
     top: 20px;                 
@@ -92,6 +94,7 @@ body {
     margin-left: 250px;
     margin-top: 80px;
     padding: 20px;
+    padding-top: 60px;
   }
   
   .prediction-section.hidden {
@@ -207,6 +210,34 @@ body {
   size: 1px;
 }
 
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background-color: #1f3db3;
+  color: white;
+  font-weight: bold;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.chat-header-icons {
+  display: flex;
+  gap: 15px;
+}
+
+.chat-header-icons i {
+  font-size: 16px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.chat-header-icons i:hover {
+  color: #d1d1ff;
+}
+
+
 
 .portal-title {
     font-size: 18px;
@@ -264,6 +295,34 @@ body {
 
 .upload-btn:hover {
   background: #005c8f;
+}
+
+.upload-box {
+  border: 2px dashed #0077b6;
+  border-radius: 10px;
+  padding: 40px 20px;
+  text-align: center;
+  cursor: pointer;
+  color: #444;
+  transition: background-color 0.3s ease;
+  position: relative;
+  margin-top: 20px;
+}
+
+.upload-box:hover {
+  background-color: #f0f8ff;
+}
+
+.upload-box i {
+  font-size: 3rem;
+  color: #0077b6;
+  margin-bottom: 10px;
+}
+
+.upload-box p {
+  font-size: 16px;
+  color: #555;
+  margin: 0;
 }
 
   input, select, button {
@@ -539,6 +598,10 @@ input, select {
     cursor: pointer;
     font-size: 16px;
     transition: all 0.3s ease;
+    width: 29%;
+    display: block;  
+    margin: 20px auto; 
+
 }
 
 .submit-btn:hover {
@@ -562,8 +625,23 @@ input, select {
 
 .detection-card {
     margin-top: 30px;
-    /* transition: transform 0.2s ease-in-out; */
 }
+
+.message-container {
+  background-color: #ffe0e0;
+  color: #d8000c;
+  border: 1px solid #d8000c;
+  padding: 12px 18px;
+  border-radius: 8px;
+  margin: 15px auto;
+  width: 90%;
+  max-width: 600px;
+  text-align: center;
+  font-weight: 500;
+  font-size: 14px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
 
 
 
@@ -627,7 +705,6 @@ input, select {
   font-weight: 500;
 }
 
-/* Button group horizontal */
 .popup-buttons {
   display: flex;
   justify-content: space-between;

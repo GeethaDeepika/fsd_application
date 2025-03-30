@@ -98,6 +98,12 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
+function resetChat() {
+  const chatMessages = document.getElementById("chatMessages");
+  chatMessages.innerHTML = `<div class="message bot">Hi! How can I assist you today?</div>`;
+}
+
+
 // ✅ Logout Popup Functions
 function showLogoutPopup(event) {
   event?.stopPropagation();
@@ -120,7 +126,7 @@ function closeLogoutPopup(event) {
 function confirmLogout() {
   localStorage.removeItem("token");
   localStorage.removeItem("user");
-  window.location.href = "login.html";
+  window.location.href = "home.html";
 }
 
 // ✅ Global Click to Close Logout Popup if clicked outside
@@ -136,68 +142,77 @@ document.addEventListener("click", function (event) {
   }
 });
 
-
 function submitPrediction() {
-  if (uploadedFileObjects.length === 0) {
-      alert("Please select at least one image for prediction.");
-      return;
+  if (!uploadedFileObjects || uploadedFileObjects.length === 0) {
+    showPDFMessage("Please select at least one image for prediction.");
+    return;
   }
 
   const patientInfo = {
-      name: document.getElementById("patientName").value || "Unknown",
-      dob: document.getElementById("patientDOB").value || "N/A",
-      phone: document.getElementById("patientPhone").value || "N/A",
-      address: document.getElementById("patientAddress").value || "N/A"
+    name: document.getElementById("patientName").value || "Unknown",
+    dob: document.getElementById("patientDOB").value || "N/A",
+    phone: document.getElementById("patientPhone").value || "N/A",
+    address: document.getElementById("patientAddress").value || "N/A"
   };
 
   const formData = new FormData();
   uploadedFileObjects.forEach(file => {
-      formData.append("images", file);
+    formData.append("images", file);
   });
 
   fetch("http://localhost:5002/predict", {
-      method: "POST",
-      body: formData
+    method: "POST",
+    body: formData
   })
-  .then(response => response.json())
-  .then(data => {
+    .then(response => response.json())
+    .then(data => {
       const predictionResult = document.getElementById("predictionResult");
-      
+
       let reportHTML = `
-          <h3>Diagnosis Report</h3>
-          <table class="prediction-table">
-              <thead>
-                  <tr>
-                      <th>Image</th>
-                      <th>Glaucoma Result</th>
-                      <th>DR Result</th>
-                  </tr>
-              </thead>
-              <tbody>
+        <h3>Diagnosis Report</h3>
+        <table class="prediction-table">
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Glaucoma Result</th>
+              <th>DR Result</th>
+            </tr>
+          </thead>
+          <tbody>
       `;
 
       data.predictions.forEach(pred => {
-          reportHTML += `
-              <tr>
-                  <td>${pred.filename}</td>
-                  <td>${pred.glaucoma_result}</td>
-                  <td>${pred.dr_result}</td>
-              </tr>
-          `;
+        reportHTML += `
+          <tr>
+            <td>${pred.filename}</td>
+            <td>${pred.glaucoma_result}</td>
+            <td>${pred.dr_result}</td>
+          </tr>
+        `;
       });
 
       reportHTML += `
-              </tbody>
-          </table>
+          </tbody>
+        </table>
       `;
 
       predictionResult.innerHTML = reportHTML;
-  })
-  .catch(error => console.error("Error during prediction:", error));
+    })
+    .catch(error => {
+      console.error("Error during prediction:", error);
+      showPDFMessage("Prediction failed. Please try again.");
+    });
 }
 
+function showPDFMessage(message) {
+  const msgBox = document.getElementById("pdfMessage");
+  msgBox.innerText = message;
+  msgBox.style.display = "block";
 
-
+  setTimeout(() => {
+    msgBox.style.display = "none";
+  }, 5000); // Hide after 4 seconds
+}
 
 
 const DR_SUGGESTIONS = {
@@ -207,7 +222,15 @@ const DR_SUGGESTIONS = {
   "Severe": "Severe DR detected. Immediate consultation needed.",
   "Proliferate_DR": "Advanced DR detected. Urgent medical attention required!"
 };
+
 function downloadPDF() {
+  const imageInput = document.getElementById("imageInput");
+
+  if (!imageInput.files || imageInput.files.length === 0) {
+    showPDFMessage("Please upload at least one image before downloading the PDF report.");
+    return;
+  }
+
   const patientInfo = {
     name: document.getElementById("patientName")?.value || "Unknown",
     dob: document.getElementById("patientDOB")?.value || "N/A",
@@ -222,7 +245,7 @@ function downloadPDF() {
   };
 
   const predictions = [];
-  const tableRows = document.querySelectorAll(".prediction-table tbody tr"); // ✅ update this selector
+  const tableRows = document.querySelectorAll(".prediction-table tbody tr");
 
   tableRows.forEach(row => {
     const cells = row.querySelectorAll("td");
@@ -262,7 +285,7 @@ function downloadPDF() {
     })
     .catch(err => {
       console.error("PDF generation failed", err);
-      alert("Error generating PDF");
+      showPDFMessage("Error generating PDF. Please try again.");
     });
 }
 
