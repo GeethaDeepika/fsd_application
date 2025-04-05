@@ -2,21 +2,58 @@ import os
 import subprocess
 import torch
 import torch.nn.functional as F
+import torch.nn as nn
+import timm
+from timm import create_model
 import pypandoc
 from flask import Flask, request, jsonify, send_file
 from torchvision import transforms
 from PIL import Image
 from flask_cors import CORS
 
+class CustomSwin(nn.Module):
+    def __init__(self):
+        super(CustomSwin, self).__init__()
+        self.backbone = create_model(
+            'swin_tiny_patch4_window7_224',
+            pretrained=True,
+            num_classes=0,
+            drop_rate=0.4,
+            drop_path_rate=0.3
+        )
+        self.head = nn.Sequential(
+            nn.LayerNorm(self.backbone.num_features),
+            nn.Dropout(0.5),
+            nn.Linear(self.backbone.num_features, 256),
+            nn.GELU(),
+            nn.Dropout(0.5),
+            nn.Linear(256, 1)
+        )
+
+    def forward(self, x):
+        x = self.backbone(x)
+        return self.head(x)
+    
+class CustomSwin_DR(nn.Module):
+    def __init__(self, num_classes=5):
+        super().__init__()
+        self.backbone = timm.create_model("swin_tiny_patch4_window7_224", pretrained=True, num_classes=0)
+        self.dropout = nn.Dropout(0.5)  # Increased dropout to 50%
+        self.head = nn.Linear(self.backbone.num_features, num_classes)
+
+    def forward(self, x):
+        x = self.backbone(x)
+        x = self.dropout(x)
+        x = self.head(x)
+        return x
+
 # Initialize Flask app
 app = Flask(__name__)
 CORS(app)
-app.config['UPLOAD_FOLDER'] = 'uploads'
-os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 # Model Paths
-GLAUCOMA_MODEL_PATH = "final_vit_glaucoma_model_the_bestepochs.pth"
-DR_MODEL_PATH = "vit_diabetic_retinopathy_final.pth"
+GLAUCOMA_MODEL_PATH = "swin_glaucoma_modelll.pth"
+DR_MODEL_PATH = "best_swin_model_dr.pth"
 
 # Load Models
 glaucoma_model = None
@@ -45,7 +82,7 @@ transform = transforms.Compose([
     transforms.Normalize([0.5], [0.5])
 ])
 
-# DR Class Labels & Treatment Suggestions
+ 
 CLASS_LABELS = {0: "Mild", 1: "Moderate", 2: "No_DR", 3: "Proliferate_DR", 4: "Severe"}
 SUGGESTIONS = {
     "No_DR": " No signs of diabetic retinopathy detected.",
