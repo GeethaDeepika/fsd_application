@@ -13,9 +13,9 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
-            <a class="navbar-brand animate__animated animate__fadeIn" href="#home">
-                <i class="fas fa-eye me-2"></i>AI Detect
-            </a>
+          <a class="navbar-brand animate__animated animate__fadeIn" href="#home" style="text-transform: none;">
+            <i class="fas fa-eye me-2"></i>A-EyeDetect
+        </a>        
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -47,28 +47,30 @@
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="hero-section">
-        <div class="animated-bg"></div>
-        <div class="particles"></div>
-        <div class="container">
-            <div class="hero-content">
-                <h1 class="hero-title animate__animated animate__fadeInDown">Welcome to AI Detect</h1>
-                <h2 class="hero-subtitle animate__animated animate__fadeInUp">Early Detection Saves Sight</h2>
-                <p class="lead mb-4 animate__animated animate__fadeIn animate__delay-1s">Empowering Vision Through AI</p>
-                <div class="button-group animate__animated animate__fadeInUp animate__delay-1s">
-                    <button class="btn btn-primary btn-custom" onclick="scrollToAbout()">
-                        <i class="fas fa-info-circle me-2"></i>Know More
-                    </button>
-                    <button class="btn btn-outline-light btn-custom" onclick="goToSignup()">
-                        <i class="fas fa-rocket me-2"></i>Explore
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="scroll-indicator">
-            <i class="fas fa-chevron-down fa-2x text-white"></i>
-        </div>
-    </section>
+
+<section id="home" class="hero-section">
+  <div class="container hero-container">
+    <!-- Left Content -->
+    <div class="hero-left">
+      <h1 class="hero-title">Empowering Eye Health with AI</h1>
+      <p class="hero-desc">
+        Detect diseases like Glaucoma and Diabetic Retinopathy early using our AI-powered platform. Fast, reliable, and accessible for all.
+      </p>
+      <div class="hero-buttons">
+        <button class="btn btn-green" onclick="document.getElementById('about').scrollIntoView({ behavior: 'smooth' });">
+          <i class="fas fa-info-circle me-2"></i>Know More
+        </button>
+      </div>
+    </div>
+    
+
+    <!-- Right Image Content -->
+    <div class="hero-right">
+      <img src="../assets/home.png" alt="Doctor" class="hero-full-image" />
+    </div>
+  </div>
+</section>
+
 
     <!-- About Section -->
 <section id="about" class="about-section">
