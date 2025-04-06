@@ -103,8 +103,6 @@ function resetChat() {
   chatMessages.innerHTML = `<div class="message bot">Hi! How can I assist you today?</div>`;
 }
 
-
-// ✅ Logout Popup Functions
 function showLogoutPopup(event) {
   event?.stopPropagation();
   const popup = document.getElementById("logoutPopup");
@@ -289,10 +287,6 @@ function downloadPDF() {
     });
 }
 
-  
-  
-
-// ✅ Append messages to chat window
 function appendMessage(text, sender) {
     const chatMessages = document.getElementById("chatMessages");
     if (!chatMessages) return;
@@ -304,7 +298,6 @@ function appendMessage(text, sender) {
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
-// ✅ Send message to backend + handle response
 function sendMessage() {
     const chatInput = document.querySelector(".chat-input input");
     const chatMessages = document.getElementById("chatMessages");
@@ -337,7 +330,6 @@ function sendMessage() {
     });
 }
 
-// ✅ Attach events only after DOM is ready
 document.addEventListener("DOMContentLoaded", function () {
     const chatInput = document.querySelector(".chat-input input");
     const sendButton = document.querySelector(".chat-input button");
@@ -350,8 +342,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-
-// ✅ Chat View Toggle
 function showChatbot() {
     document.getElementById("chatPanel")?.classList.add("visible");
     document.getElementById("predictionSection")?.classList.add("hidden");

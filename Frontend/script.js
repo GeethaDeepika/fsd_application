@@ -1,6 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-
-    // Handle Signup Form
     const signupForm = document.querySelector("#signupForm");
 
     if (signupForm) {
@@ -142,13 +140,11 @@ document.addEventListener("DOMContentLoaded", function () {
             document.querySelector("#email").value = storedEmail;
         } else {
             alert("Invalid session. Please restart the password reset process.");
-            window.location.href = "forgot.html"; // Redirect back
+            window.location.href = "forgot.html";
         }
 
         verifyResetCodeForm.addEventListener("submit", function (event) {
             event.preventDefault();
-
-            // const email = document.querySelector("#email").value;
             const email = localStorage.getItem("resetEmail");
             const code = document.querySelector("#code").value;
 
@@ -163,14 +159,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 .then((data) => {
                     if (data.success) {
                         messageBox.textContent = "Code verified successfully! Redirecting...";
-                        messageBox.style.color = "#90ee90"; // Light green
-                        // sessionStorage.setItem("email", email);
-                        // sessionStorage.setItem("resetCode", code);
+                        messageBox.style.color = "#90ee90"; 
                         localStorage.setItem("resetCode", code);
                         window.location.href = "reset-password.html"; // Redirect on success
                     } else {
                         messageBox.textContent = data.message || "Invalid code.";
-                        messageBox.style.color = "#ffcccc"; // Light red
+                        messageBox.style.color = "#ffcccc"; 
                     }
                 })
                 .catch((error) => {
@@ -186,17 +180,9 @@ document.addEventListener("DOMContentLoaded", function () {
     if (resetPasswordForm) {
         const messageBox = document.getElementById("messageBox");
 
-        // const email = sessionStorage.getItem("email");
-        // const resetCode = sessionStorage.getItem("resetCode");
 
         const storedEmail = localStorage.getItem("resetEmail");
         const storedResetCode = localStorage.getItem("resetCode");
-
-        // if (!email || !resetCode) {
-        //     alert("Invalid session. Please restart the password reset process.");
-        //     window.location.href = "forgot.html"; // Redirect back
-        //     return;
-        // }
 
         if (storedEmail && storedResetCode) {
             document.querySelector("#email").value = storedEmail;
@@ -217,7 +203,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-            // Send request to backend
             fetch("http://localhost:5001/api/auth/reset-password", {
                 method: "POST",
                 headers: {
@@ -229,11 +214,9 @@ document.addEventListener("DOMContentLoaded", function () {
             .then((data) => {
                 messageBox.textContent = data.message;
                 if (data.message === "Password reset successfully!") {
-                    // sessionStorage.removeItem("email");
-                    // sessionStorage.removeItem("resetCode");
                         localStorage.removeItem("resetEmail");
                         localStorage.removeItem("resetCode");
-                    window.location.href = "login.html"; // Redirect to login
+                    window.location.href = "login.html"; 
                 }
             })
             .catch((error) => console.error("Reset error:", error));

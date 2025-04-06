@@ -12,8 +12,7 @@ body {
     overflow-x: hidden;
     height: 100%;
   }
-  
-  /* Sidebar */
+
   .sidebar {
     width: 250px;
     height: 95vh;
@@ -118,7 +117,6 @@ body {
   display: flex;
 }
 
-/* Chat Header */
 .chat-header {
   background-color: #1f3fa7;
   color: white;
@@ -130,7 +128,6 @@ body {
   align-items: center;
 }
 
-/* Chat Body */
 .chat-body {
   background-color: #f5f7fa;
   padding: 20px;
@@ -159,7 +156,6 @@ body {
   width: fit-content;
 }
 
-/* Chat Input Section */
 .chat-input {
   display: flex;
   align-items: center;

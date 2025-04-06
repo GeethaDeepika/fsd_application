@@ -9,7 +9,6 @@ os.environ["PORT"] = "5001"
 os.environ["JWT_SECRET"] = "dd399a2bd9e7aa3f01cde4e711f86af9480c820bb7bb0ce9ba061df52fb86d34"
 
 
-
 # Paths to your server scripts
 BACKEND_SCRIPT = "/Users/geethadeepika/Documents/github/fsd_application/Backend/server.js"
 MODEL_SCRIPT = "/Users/geethadeepika/Documents/github/fsd_application/final_app.py"
