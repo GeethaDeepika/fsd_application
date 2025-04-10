@@ -7,14 +7,14 @@ This project integrates the best performed model into the backend of the applica
 
 • Authentication: Signup, login, forgot password along with google signup and login  
 • Image Upload: Upload retinal images through a responsive UI  
-• Prediction: Transformer model will predict the output
-• Result Display: Table with results for DR and Glaucoma will be displayed 
-• PDF Report: Generate downloadable report with patient info, predictions and suggestions 
-• Chatbot: Ask questions to a Gemini-based assistant built using RAG 
+• Prediction: Transformer model will predict the output  
+• Result Display: Table with results for DR and Glaucoma will be displayed  
+• PDF Report: Generate downloadable report with patient info, predictions and suggestions   
+• Chatbot: Ask questions to a Gemini-based assistant built using RAG  
 
 ## Set-up instructions
 1. Clone the repository
-git clone https://github.com/GeethaDeepika/fsd_application.git
+git clone https://github.com/GeethaDeepika/fsd_application.git  
 cd fsd_application
 
 2. Install the required packages
