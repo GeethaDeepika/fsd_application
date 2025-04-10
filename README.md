@@ -5,10 +5,11 @@ A full-stack web application where users can log in and upload retinal images to
 ## Project Overview 
 This project integrates Machine Learning and Web Development to build a medical diagnostic tool. It allows:
 
-Users to upload fundus images.
-. Predict disease status using ViT, Swin Transformer, and Twin Transformer.
-. Generate consolidated results using an ensemble of predictions.
-. View results in a table format.
-. Download diagnosis report as a PDF.
-. Chat with a medical assistant powered by LangChain + Gemini.
+• Authentication: Signup, login, forgot/reset password with secure backend logic  
+• Image Upload: Upload retinal images through a responsive UI  
+• Prediction: Ensemble classification using three state-of-the-art models  
+• Result Display: Table with results for DR and Glaucoma  
+• PDF Report: Generate downloadable report with patient info and predictions  
+• Chatbot: Ask questions to a Gemini-based assistant with RAG and vector search  
+
 
