@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from dotenv import load_dotenv
 import os
 from langchain_community.document_loaders import TextLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
@@ -11,8 +12,8 @@ from langchain.chains import create_retrieval_chain
 
 app = Flask(__name__)
 CORS(app) 
-
-API_KEY = "add your gemini api key here"  
+load_dotenv()
+API_KEY = os.getenv("GEMINI_API_KEY")
 DOCUMENT_PATH = "document.txt" 
 
 # Load Document
