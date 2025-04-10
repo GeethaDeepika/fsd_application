@@ -2,10 +2,15 @@ import subprocess
 import time
 import os
 import signal
+from dotenv import load_dotenv
+import os
 
-os.environ["MONGO_URI"] = "add mongo uri here"  
-os.environ["PORT"] = "give your port number here"
-os.environ["JWT_SECRET"] = "add your jwt-token here"
+dotenv_path = os.path.join(os.path.dirname(__file__), ".env")
+load_dotenv(dotenv_path)
+
+MONGO_URI = os.getenv("MONGO_URI")
+PORT = os.getenv("PORT")
+JWT_SECRET = os.getenv("JWT_SECRET")
 
 
 BACKEND_SCRIPT = "./Backend/server.js"
