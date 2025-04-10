@@ -9,42 +9,41 @@ from langchain_google_genai import GoogleGenerativeAI
 from langchain.prompts import PromptTemplate
 from langchain.chains import create_retrieval_chain
 
-# Initialize Flask App
 app = Flask(__name__)
 CORS(app) 
 
-API_KEY = "AIzaSyAXCCmQSzlWTByBKSiIJ4YKrzJr-ozdbZU"  
+API_KEY = "add your gemini api key here"  
 DOCUMENT_PATH = "document.txt" 
 
-# Step 1: Load Document
+# Load Document
 def load_document(file_path):
     loader = TextLoader(file_path)
     return loader.load()
 
-# Step 2: Split Document into Chunks
+# Split Document into Chunks
 def split_documents(documents):
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
     return text_splitter.split_documents(documents)
 
-# Step 3: Create Embeddings
+# Create Embeddings
 def create_embeddings():
     return HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 
-# Step 4: Store in FAISS Vector Database
+# Store in FAISS Vector Database
 def store_embeddings(docs, embeddings):
     vector_db = FAISS.from_documents(docs, embeddings)
     vector_db.save_local("faiss_index")
     return vector_db
 
-# Step 5: Load FAISS Database
+# Load FAISS Database
 def load_vector_db(embeddings):
     return FAISS.load_local("faiss_index", embeddings, allow_dangerous_deserialization=True)
 
-# Step 6: Get Retriever
+# Get Retriever
 def get_retriever(vector_db):
     return vector_db.as_retriever(search_kwargs={"k": 3})
 
-# Step 7: Set Up Gemini 2.0 Flash with Context-Aware Retrieval
+# Set Up Gemini 2.0 Flash with Context-Aware Retrieval
 def setup_gemini(api_key, retriever):
     system_prompt = """
     You are a professional AI medical assistant specialized in eye-related conditions such as glaucoma, diabetic retinopathy, macular degeneration, retina issues, and fundus imaging.
@@ -73,7 +72,6 @@ def setup_gemini(api_key, retriever):
     llm = GoogleGenerativeAI(model="gemini-2.0-flash", google_api_key=api_key)
     return create_retrieval_chain(retriever, prompt | llm)
 
-# Load and Set Up Chatbot
 documents = load_document(DOCUMENT_PATH)
 docs = split_documents(documents)
 embeddings = create_embeddings()
@@ -81,7 +79,6 @@ vector_db = store_embeddings(docs, embeddings)
 retriever = get_retriever(load_vector_db(embeddings))
 chatbot = setup_gemini(API_KEY, retriever)
 
-# Define Chat API Endpoint
 @app.route("/chat", methods=["POST"])
 def chat():
     data = request.json
@@ -92,10 +89,8 @@ def chat():
 
     response = chatbot.invoke({"input": user_input})
 
-    # Extract only the answer field
     chatbot_reply = response.get("answer", "I'm sorry, I couldn't find a relevant answer.")
     return jsonify({"response": chatbot_reply})
 
-# Run Flask App
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5003, debug=True)
