@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const messageBox = document.getElementById("messageBox");
     
         signupForm.addEventListener("submit", function (event) {
-            event.preventDefault(); // Prevent page reload
+            event.preventDefault(); 
     
             // Get form field values
             const email = signupForm.elements["email"].value;
@@ -18,14 +18,12 @@ document.addEventListener("DOMContentLoaded", function () {
             messageBox.textContent = "";
             messageBox.style.color = "white";
     
-            // Password mismatch check
             if (password !== confirmPassword) {
                 messageBox.textContent = "Passwords do not match!";
                 messageBox.style.color = "#ffcccc";
                 return;
             }
-    
-            // Prepare data to send
+
             const formData = { email, password, firstName, lastName };
     
             // Send data to backend
@@ -40,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .then((data) => {
                 if (data.message === "User registered successfully") {
                     messageBox.textContent = "Registration successful! Redirecting to login...";
-                    messageBox.style.color = "#90ee90"; // Light green
+                    messageBox.style.color = "#90ee90"; 
                     setTimeout(() => {
                         window.location.href = "login.html";
                     }, 2000);
@@ -57,9 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
     
-    
 
-    // Handle Login Form
     const loginForm = document.querySelector("#loginForm"); 
 
     if (loginForm) {
@@ -95,7 +91,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Handle Forgot Password Form
+    // Handle Forgot Password
     const forgotPasswordForm = document.querySelector("#forgotPasswordForm");
 
     if (forgotPasswordForm) {
@@ -129,7 +125,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Handle Verify Reset Code Form (User enters the reset code)
+    // Handle Verify Reset Code Form
     const verifyResetCodeForm = document.querySelector("#verify-reset-code-form");
 
     if (verifyResetCodeForm) {
@@ -161,7 +157,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         messageBox.textContent = "Code verified successfully! Redirecting...";
                         messageBox.style.color = "#90ee90"; 
                         localStorage.setItem("resetCode", code);
-                        window.location.href = "reset-password.html"; // Redirect on success
+                        window.location.href = "reset-password.html"; 
                     } else {
                         messageBox.textContent = data.message || "Invalid code.";
                         messageBox.style.color = "#ffcccc"; 
@@ -188,7 +184,7 @@ document.addEventListener("DOMContentLoaded", function () {
             document.querySelector("#email").value = storedEmail;
         } else {
             messageBox.textContent = "Invalid session. Please restart the password reset process";
-            window.location.href = "forgot.html"; // Redirect back
+            window.location.href = "forgot.html"; 
         }
 
         resetPasswordForm.addEventListener("submit", function (event) {
