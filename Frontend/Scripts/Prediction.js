@@ -2,7 +2,7 @@ let uploadedFiles = [];
 let uploadedFileObjects = [];
 
 document.addEventListener("DOMContentLoaded", function () {
-  // ✅ 1. Auth Check
+  // Auth Check
   const user = JSON.parse(localStorage.getItem("user"));
   const token = localStorage.getItem("token");
 
@@ -11,14 +11,14 @@ document.addEventListener("DOMContentLoaded", function () {
     return;
   }
 
-  // ✅ 2. Show Profile Info
+  // Show Profile Info
   const fullName = user.displayName || user.firstName || "User";
   const initial = fullName.charAt(0).toUpperCase();
 
   document.getElementById("profileName").textContent = fullName;
   document.getElementById("profileInitial").textContent = initial;
 
-  // ✅ 3. Upload Image Preview
+  // Upload Image Preview
   const imageInput = document.getElementById("imageInput");
   const previewContainer = document.getElementById("previewContainer");
 
@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // ✅ 4. Dropdown Hover Logic
+  // Dropdown Hover Logic
   const profileWrapper = document.querySelector(".user-profile-wrapper");
   const dropdown = document.getElementById("profileDropdown");
 
@@ -79,14 +79,14 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // ✅ 5. Attach Logout Popup Events
+  // Attach Logout Popup Events
   const logoutBtn = document.querySelector("#profileDropdown button");
   const confirmBtn = document.getElementById("logoutConfirmBtn");
 
   if (logoutBtn) logoutBtn.addEventListener("click", showLogoutPopup);
   if (confirmBtn) confirmBtn.addEventListener("click", confirmLogout);
 
-  // ✅ 6. Chatbot Events
+  // Chatbot Events
   const sendButton = document.querySelector(".chatbot-input button");
   const chatInput = document.querySelector(".chatbot-input input");
 
@@ -127,7 +127,7 @@ function confirmLogout() {
   window.location.href = "home.html";
 }
 
-// ✅ Global Click to Close Logout Popup if clicked outside
+// Global Click to Close Logout Popup if clicked outside
 document.addEventListener("click", function (event) {
   const popup = document.getElementById("logoutPopup");
   if (
@@ -307,11 +307,9 @@ function sendMessage() {
     const userMessage = chatInput.value.trim();
     if (userMessage === "") return;
 
-    // Show user message
     appendMessage(userMessage, "user");
     chatInput.value = "";
 
-    // Send to backend
     fetch("http://127.0.0.1:5003/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
