@@ -69,11 +69,10 @@ router.post("/forgot-password", async (req, res) => {
         // Generate a 6-digit reset code
         const resetCode = Math.floor(100000 + Math.random() * 900000).toString(); 
 
-        // Set code expiry time (e.g., 10 minutes)
+        // Set code expiry time 10 minutes
         user.resetPasswordToken = resetCode;
-        user.resetPasswordExpires = Date.now() + 10 * 60 * 1000; // 10 minutes
+        user.resetPasswordExpires = Date.now() + 10 * 60 * 1000; 
 
-        // Save the user with new reset fields
         await user.save();
 
         console.log("Reset code:", resetCode);
@@ -83,8 +82,8 @@ router.post("/forgot-password", async (req, res) => {
         const transporter = nodemailer.createTransport({
             service: "gmail",
             auth: {
-                user: 'deepikakatragadda04@gmail.com',
-                pass: 'mcyd gnpz lruz hpkq',
+                user: 'email',
+                pass: 'pass (bbbb bbbb bbbb)',
             },
         });
 
@@ -142,8 +141,8 @@ router.post("/reset-password", async (req, res) => {
         // Find the user by email and check if the reset code is valid and not expired
         const user = await User.findOne({
             email,
-            resetPasswordToken: resetCode, // Ensure reset code matches
-            resetPasswordExpires: { $gt: Date.now() }, // Ensure token has not expired
+            resetPasswordToken: resetCode, 
+            resetPasswordExpires: { $gt: Date.now() }, 
         });
 
         if (!user) {
@@ -153,8 +152,6 @@ router.post("/reset-password", async (req, res) => {
         // Hash the new password
         const hashedPassword = await bcrypt.hash(newPassword, 10);
         user.password = hashedPassword;
-
-        // Clear the reset code fields after successful reset
         user.resetPasswordToken = undefined;
         user.resetPasswordExpires = undefined;
 
